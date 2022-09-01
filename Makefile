@@ -6,7 +6,7 @@
 #    By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 03:58:29 by agrotzsc          #+#    #+#              #
-#    Updated: 2022/09/01 15:02:30 by agrotzsc         ###   ########.fr        #
+#    Updated: 2022/09/01 16:51:04 by agrotzsc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,10 +46,16 @@ MLX_DIR			=	./lib/minilibx-linux/
 MLX_FILES		=	libmlx_Linux.a
 MLX				=	$(addprefix $(MLX_DIR),$(MLX_FILES))
 
+LIBFT_DIR		=	./lib/LIBFT/
+LIBFT_FILES		=	libft.a
+LIBFT			=	$(addprefix $(MLX_DIR),$(MLX_FILES))
+
+all: mlx_all libft_all ${NAME}
+
 $(NAME): $(OBJS)
 	@printf "%b" "\r\033[2K"
 	@printf "%b" "\r$(YELLOW)Compiling: $(NAME)$(DEF_COLOR)"
-	@$(CC) -o $(NAME) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline
+	@$(CC) -o $(NAME) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) -L/usr/include/X11/extensions -lX11 -lXext
 	@printf "%b" "\r\033[2K"
 	@printf "%b" "\r$(GREEN)$(NAME) compiled.$(DEF_COLOR)\n"
 
@@ -59,13 +65,18 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@printf "%b" "\r$(YELLOW)Compiling: $<$(DEF_COLOR)"
 	@$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
-all: mlx_all ${NAME}
-
 mlx_all:
 	cd $(MLX_DIR) && ./configure
 
 mlx_clean:
 	cd $(MLX_DIR) && ./configure clean
+
+libft_all:
+	cd $(LIBFT_DIR) && make
+
+libft_fclean:
+	cd $(LIBFT_DIR) && make fclean
+
 
 clean:
 	@${RM} ${OBJ_DIR}
