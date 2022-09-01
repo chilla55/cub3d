@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/01 23:22:46 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/01 23:51:32 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@ void	null_init(t_game *game)
 	game->ea_path = NULL;
 	game->f_color = NULL;
 	game->c_color = NULL;
+	game->mlx = NULL;
+	game->mlx_win = NULL;
+}
+
+
+void	set_player_pos(t_game *game, int x, int y)
+{
+	char c;
+
+	c = game->map[x][y];
+	if(!ft_strchr("NSWE", c))
+		return ;
+	else if (c == 'N')
+		game->angle = 0.0; 
+	else if (c == 'E')
+		game->angle = 90.0;
+	else if (c == 'S')
+		game->angle = 180.0; 
+	else if (c == 'W')
+		game->angle = 270.0;
+	game->x_pos = (double)x + 0.5;
+	game->y_pos = (double)y + 0.5;
 }
 
 void	map_test(t_game *game)
@@ -57,6 +79,7 @@ void	map_test(t_game *game)
 				if (game->map[i][j] != '0')
 					p++;
 			}
+			set_player_pos(game, i, j);
 			j++;
 		}
 		i++;
@@ -66,7 +89,7 @@ void	map_test(t_game *game)
 	printf("Map ok.\n");
 }
 
-static int	open_cub(char *path)
+int	open_cub(char *path)
 {
 	int		fd;
 
@@ -307,7 +330,6 @@ t_game	*game_init(char *path)
 	}
 	printf("\n");
 	map_test(game);
-	game->mlx = NULL;
-	game->mlx_win = NULL;
+	printf("Player position: %f, %f, angle %f\n", game->x_pos, game->y_pos, game->angle);
 	return (game);
 }

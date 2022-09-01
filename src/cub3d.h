@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/01 22:17:56 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/02 00:00:46 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@
 ** fcntl for open
 */
 
-# define TILE_SIZE	42
+# define X_RES = 640
+# define Y_RES = 480
 
 # ifndef USE_ARROW_KEYS
 #  define USE_ARROW_KEYS	0
@@ -59,7 +60,7 @@ typedef struct s_game {
 	int		width;
 	double	x_pos;
 	double	y_pos;
-	int		angle;
+	double	angle;
 	char	**map;
 	char	*no_path;
 	char	*so_path;
@@ -111,4 +112,7 @@ void	ft_free_imgs(t_map *map);
 // ft_t_map_print.c
 void	ft_t_map_print(t_map *map);
 */
+
+void	raycaster_init(t_game *game);
+
 #endif
