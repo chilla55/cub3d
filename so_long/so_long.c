@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 14:59:31 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/09/01 22:44:13 by skorte           ###   ########.fr       */
+/*   Created: 2022/03/24 14:34:57 by skorte            #+#    #+#             */
+/*   Updated: 2022/04/01 10:50:24 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "cub3d.h"
+#include "so_long.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char	**argv)
 {
-	t_game	*game;
+	t_map	*map;
 
-	printf("CUB3D\n");
-	game = NULL;
+	map = NULL;
+	srand(time(0));
 	if (argc != 2)
-		return (-1);
-	game = game_init(argv[1]);
-	(void)game;
-	game_exit(game, 0);
+		ft_exit(NULL, -3);
+	map = ft_t_map_init(argv[1]);
+	ft_mlx_init(map);
+	ft_exit(map, 65307);
 	return (0);
 }

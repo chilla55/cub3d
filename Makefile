@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+         #
+#    By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 03:58:29 by agrotzsc          #+#    #+#              #
-#    Updated: 2022/09/01 16:51:04 by agrotzsc         ###   ########.fr        #
+#    Updated: 2022/09/01 19:04:01 by skorte           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,9 @@ MLX_DIR			=	./lib/minilibx-linux/
 MLX_FILES		=	libmlx_Linux.a
 MLX				=	$(addprefix $(MLX_DIR),$(MLX_FILES))
 
-LIBFT_DIR		=	./lib/LIBFT/
+LIBFT_DIR		=	./lib/libft/
 LIBFT_FILES		=	libft.a
-LIBFT			=	$(addprefix $(MLX_DIR),$(MLX_FILES))
+LIBFT			=	$(addprefix $(LIBFT_DIR),$(LIBFT_FILES))
 
 all: mlx_all libft_all ${NAME}
 
