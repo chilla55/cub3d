@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/02 00:00:46 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/02 00:24:42 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <time.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <math.h>
 # include <stdio.h> //remove??
 # include "../lib/libft/libft.h"
 # include "../lib/minilibx-linux/mlx.h"
@@ -39,8 +40,9 @@
 ** fcntl for open
 */
 
-# define X_RES = 640
-# define Y_RES = 480
+# define X_RES 20
+# define Y_RES 720
+# define PI (double)3.1415926
 
 # ifndef USE_ARROW_KEYS
 #  define USE_ARROW_KEYS	0
