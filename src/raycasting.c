@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 23:53:11 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/02 12:22:56 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/05 19:39:03 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,17 @@
 void	raycaster_init(t_game *game)
 {
 	int		i;
-	double	alpha;
 
 	i = 0;
 	printf("\nCalculating default ray directions\n");
 	while (i < X_RES)
 	{
-		alpha = atan(((double)i + 0.5 - (double)X_RES / 2.0)
+		game->rays[i] = malloc(sizeof(t_ray));
+		game->rays[i]->alpha = atan(((double)i + 0.5 - (double)X_RES / 2.0)
 				/ ((double)X_RES / 2.0));
-		printf("%f\n", alpha * 360 / 2 / PI);
+		printf("%f\n", game->rays[i]->alpha * 360 / 2 / PI);
 		i++;
 	}
-	(void)game;
 }
 
 int	check_x_wall(t_game *game, double x, double d_x, double alpha)

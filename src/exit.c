@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:39:05 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/01 23:20:19 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/05 21:15:12 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 static void	credits(void)
 {
-	write(1, &"\nGraphics credits:\n", 19);
+	write(STDOUT_FILENO, &"\nGraphics credits:\n", 19); // Fill in!
+	write(STDOUT_FILENO, &" Start screen: Walt Disney's Jungle Book (1967)\n", 48); // Fill in!
 }
 
 /*
@@ -29,46 +30,52 @@ static void	credits(void)
 static void	exitmessage(int exitmode)
 {
 	if (exitmode == 0)
-		write (1, "\nNormal exit\n", 13);
+		write (STDOUT_FILENO, "\nNormal exit\n", 13);
+	else if (exitmode == 65307)
+		write (STDOUT_FILENO, "\nESC pressed. Normal exit\n", 26);
 	else if (exitmode == -1)
 		write (STDERR_FILENO, "\nError:\n Invalid cub file!\n", 27);
 	else if (exitmode == -2)
 		write (STDERR_FILENO, "\nError:\n MLX failed!\n", 21);
 	else if (exitmode == -3)
 		write (STDERR_FILENO, "\nError:\n cub file path invalid!\n", 32);
+	else if (exitmode == -4)
+		write (STDERR_FILENO, "\nError:\n Wall texture not found!\n", 33);
 	else if (exitmode < 0)
 		write (STDERR_FILENO, "\nError:\n error??\n", 17);
-	if (exitmode == 0)
+	if (exitmode == 0 || exitmode == 65307)
 		credits();
 }
 
 /*
-** A click on the 'x' on the upper right window corner gets redirected
-** as press on the escape key.
+** Hitting the "X" in the upper right corner of the window runs a normal exit.
 */
-/*
-int	ft_exitclick(void *map)
+
+int	exitclick(void *game)
 {
-	ft_exit((t_map *)map, 65307);
+	game_exit((t_game *)game, 0);
 	return (0);
 }
-*/
+
 /*
 ** On exit, all allocated memory is freed and a message displayed.
 */
 
 void	game_exit(t_game *game, int exitmode)
 {
+	int	i;
+
 	if (game)
 	{
-		if (game->no_path)
-			free (game->no_path);
-		if (game->so_path)
-			free (game->so_path);
-		if (game->we_path)
-			free (game->we_path);
-		if (game->ea_path)
-			free (game->ea_path);
+		i = 0;
+		while (i < 4)
+		{
+			if (game->image_paths[i])
+				free (game->image_paths[i]);
+			if (game->mlx_images[i])
+				mlx_destroy_image(game->mlx, game->mlx_images[i]);
+			i++;
+		}
 		if (game->f_color)
 			free (game->f_color);
 		if (game->c_color)
@@ -79,26 +86,26 @@ void	game_exit(t_game *game, int exitmode)
 			game->height--;
 		}
 		free (game->map);
+		i = 0;
+		while (i < X_RES)
+		{
+			if (game->rays[i])
+				free (game->rays[i]);
+			i++;
+		}
+		if (game->frame_buffer)
+			mlx_destroy_image(game->mlx, game->frame_buffer);
+		if (game->mlx_win)
+		{
+			mlx_destroy_window(game->mlx, game->mlx_win);
+		}
+		if (game->mlx)
+		{
+			mlx_destroy_display(game->mlx);
+			free(game->mlx);
+		}
 		free (game);
 	}
 	exitmessage(exitmode);
 	exit (0);
 }
-/*		ft_t_map_print(map);
-	ft_exitmessage(exitmode);
-	if (map)
-	{
-		if (map->tiles)
-			free(map->tiles);
-		if (map->mlx_win)
-		{
-			ft_free_imgs(map);
-			mlx_destroy_window(map->mlx, map->mlx_win);
-		}
-		if (map->mlx)
-		{
-			mlx_destroy_display(map->mlx);
-			free(map->mlx);
-		}
-		free(map);
-	}*/

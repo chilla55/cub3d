@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/02 00:24:42 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/05 21:10:27 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,54 +40,68 @@
 ** fcntl for open
 */
 
-# define X_RES 20
+# define X_RES 1280
 # define Y_RES 720
 # define PI (double)3.1415926
 
-# ifndef USE_ARROW_KEYS
-#  define USE_ARROW_KEYS	0
-# endif
+# define TILE_SIZE	42
 
 /*
 ** 0 for an empty space,
 ** 1 for a wall,
-** NSWE for the Player’s starting position and orientation
-** One *char[] *tiles to hold the whole map as string
+** NSWE for the Player’s starting position and orientation.
 ** *mlx pointer for the MinilibX components
 ** **X[] pointers to load all neccessary image files
 */
 
+typedef struct s_ray {
+	double	alpha;
+	double	x;
+	double	y;
+	double	d_x;
+	double	d_y;
+	char	wallface;
+	int		h_pixel;
+}				t_ray;
+
 typedef struct s_game {
+	char	**map;
 	int		height;
 	int		width;
 	double	x_pos;
 	double	y_pos;
 	double	angle;
-	char	**map;
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
+	t_ray	*rays[X_RES];
+
 	char	*f_color;
 	char	*c_color;
 	void	*mlx;
 	void	*mlx_win;
+	char	*image_paths[4];
+	void	*mlx_images[4];
+	void	*frame_buffer;
 }				t_game;
 
 // exit.c
-int		ft_exitclick(void *map);
+int		exitclick(void *game);
 void	game_exit(t_game *game, int exitmode);
+
 /*
 // ft_move.c
 void	ft_move_g(t_map *map, int key);
 void	ft_move_p(t_map *map, int key);
 int		ft_input_generator(t_map *map);
 void	ft_guard_pos_generator(t_map *map);
+*/
 
-// ft_mlx_init.c
-void	ft_mlx_init(t_map *map);
-void	ft_mlx_draw_map(t_map *map);
+// mlx_init.c
+void	game_mlx_init(t_game *game);
 
+void	load_images(t_game *game);
+void	load_start_screen(t_game *game);
+
+//void	ft_mlx_draw_map(t_map *map);
+/*
 // ft_put_draw.c
 void	ft_put_image_2(void *img, int pos, t_map *map);
 void	ft_draw_win(t_map *map);
@@ -103,18 +117,29 @@ void	ft_redraw_1(t_map *map, int pos);
 void	ft_redraw_c(t_map *map, int pos);
 
 */
-// ft_t_map_init.c
+
+// game_init.c
 t_game	*game_init(char *path);
+int		open_cub(char *path);
+void	set_player_pos(t_game *game, int x, int y);
 
-/*
-// ft_load_imgs.c
-void	ft_load_imgs(t_map *map, int tls);
-void	ft_free_imgs(t_map *map);
+// map_test.c
+void	map_test(t_game *game);
 
-// ft_t_map_print.c
-void	ft_t_map_print(t_map *map);
-*/
+// load_cub_1.c
+void	get_size(t_game *game, int fd);
+void	get_no_texture(t_game *game, int fd);
+void	get_so_texture(t_game *game, int fd);
+void	get_ea_texture(t_game *game, int fd);
+void	get_we_texture(t_game *game, int fd);
 
+// load_cub_2.c
+void	get_f_color(t_game *game, int fd);
+void	get_c_color(t_game *game, int fd);
+void	skip_empty_line(t_game *game, int fd);
+void	skip_lines(t_game *game, int fd);
+
+// raycasting.c
 void	raycaster_init(t_game *game);
 
 #endif

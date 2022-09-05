@@ -6,7 +6,7 @@
 #    By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 03:58:29 by agrotzsc          #+#    #+#              #
-#    Updated: 2022/09/01 19:04:01 by skorte           ###   ########.fr        #
+#    Updated: 2022/09/02 00:24:12 by skorte           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ all: mlx_all libft_all ${NAME}
 $(NAME): $(OBJS)
 	@printf "%b" "\r\033[2K"
 	@printf "%b" "\r$(YELLOW)Compiling: $(NAME)$(DEF_COLOR)"
-	@$(CC) -o $(NAME) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) -L/usr/include/X11/extensions -lX11 -lXext
+	@$(CC) -o $(NAME) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) -lm -L/usr/include/X11/extensions -lX11 -lXext
 	@printf "%b" "\r\033[2K"
 	@printf "%b" "\r$(GREEN)$(NAME) compiled.$(DEF_COLOR)\n"
 

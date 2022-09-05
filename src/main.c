@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 14:59:31 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/09/01 23:59:54 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/05 14:14:04 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv)
 		return (-1);
 	game = game_init(argv[1]);
 	raycaster_init(game);
+	game_mlx_init(game);
 	game_exit(game, 0);
 	return (0);
 }
