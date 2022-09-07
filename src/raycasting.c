@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 23:53:11 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/05 19:39:03 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/07 22:57:45 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,23 @@ void	raycaster_init(t_game *game)
 	int		i;
 
 	i = 0;
-	printf("\nCalculating default ray directions\n");
+	printf("\nCalculating default ray directions (only needs to be once done at the beginning)\n");
 	while (i < X_RES)
 	{
 		game->rays[i] = malloc(sizeof(t_ray));
-		game->rays[i]->alpha = atan(((double)i + 0.5 - (double)X_RES / 2.0)
+		game->rays[i]->alpha_0 = atan(((double)i + 0.5 - (double)X_RES / 2.0)
 				/ ((double)X_RES / 2.0));
-		printf("%f\n", game->rays[i]->alpha * 360 / 2 / PI);
+		printf("%f \n", game->rays[i]->alpha_0 * 360 / 2 / PI);
 		i++;
+	}
+	i = 0;
+	printf("\nCalculating current ray directions\n");
+	while (i < X_RES)
+	{
+//		raycast_ray_init(game, i);
+		game->rays[i]->distance = raycast_ray_init(game, i);
+		game->rays[i]->height = (int)(Y_RES / 2 / game->rays[i]->distance);
+		i++;	
 	}
 }
 
@@ -38,22 +47,38 @@ int	check_x_wall(t_game *game, double x, double d_x, double alpha)
 {
 	double	y;
 
-	y = game->y_pos + d_x / cos (alpha);
-	(void)x;
-	(void)y;
+	y = game->y_pos + d_x * sin (alpha);
+	printf("checking map: %f %f %i \n", x, y, game->map[(int)ceil(y)][(int)ceil(x)]);
+	if (game->map[(int)ceil(y)][(int)ceil(x)] == '1')
+		return (1);
+	return (0);}
+
+int	check_y_wall(t_game *game, double y, double d_y, double alpha)
+{
+	double	x;
+
+	x = game->x_pos + d_y * cos (alpha);
+	printf("checking map: %f %f %i \n", x, y, game->map[(int)ceil(y)][(int)ceil(x)]);
+	if (game->map[(int)ceil(y)][(int)ceil(x)] == '1')
+		return (1);
 	return (0);
 }
 
-double	raycast_find_wall(t_game *game, double x, double y, double angle)
+double	raycast_find_wall(t_game *game, double x, double y, int ray)
 {
 	double	d_x;
 	double	d_y;
 
-	d_x = (x - game->x_pos) / sin(game->angle);
-	d_y = (y - game->y_pos) / cos(game->angle);
-	if (d_x < d_y)
+	d_x = (x - game->x_pos) / sin(game->rays[ray]->alpha);
+	if (d_x < 0)
+		d_x *= -1;
+	d_y = (y - game->y_pos) / cos(game->rays[ray]->alpha);
+	if (d_y < 0)
+		d_y *= -1;
+	printf(" dx %f dy %f ", d_x, d_y);
+	if (d_x <= d_y)
 	{
-		if (check_x_wall(game, x, d_x, angle))
+		if (check_x_wall(game, x, d_x, game->rays[ray]->alpha))
 			return (d_x);
 		if (x > game->x_pos)
 			x = x + 1.0;
@@ -62,25 +87,47 @@ double	raycast_find_wall(t_game *game, double x, double y, double angle)
 	}
 	else
 	{
-		//if (check_y_wall(game, d_y, alpha))
-		//	return (d_y);
+		if (check_y_wall(game, y, d_y, game->rays[ray]->alpha))
+			return (d_y);
 		if (y > game->y_pos)
 			y = y + 1.0;
 		else
 			y = y - 1.0;
 	}
-	return (raycast_find_wall(game, x, y, angle));
+	printf (" new x %f y %f \n", x, y);
+	return (raycast_find_wall(game, x, y, ray));
+}
+
+void	ray_set_alpha(t_game *game, int ray)
+{
+	game->rays[ray]->alpha = game->rays[ray]->alpha_0 + game->angle * PI / 180;
+	while (game->rays[ray]->alpha < 0)
+		game->rays[ray]->alpha += 2 * PI;
+	while (game->rays[ray]->alpha >= 2 * PI)
+		game->rays[ray]->alpha -= 2 * PI;
+	printf("%f \n", game->rays[ray]->alpha * 360 / 2 / PI);
+	if (0 < game->rays[ray]->alpha && game->rays[ray]->alpha <= PI)
+	{
+		game->rays[ray]->d_x_sign = POS_SIGN;
+	}
+	else
+		game->rays[ray]->d_x_sign = NEG_SIGN;
+	if (PI / 2 < game->rays[ray]->alpha && game->rays[ray]->alpha <= 3 * PI / 2)
+	{
+		game->rays[ray]->d_y_sign = POS_SIGN;
+	}
+	else
+		game->rays[ray]->d_y_sign = NEG_SIGN;
+	return ;
 }
 
 double	raycast_ray_init(t_game *game, int ray)
 {
 	double	x;
 	double	y;
-	double	angle;
-
-	angle = atan(((double)ray + 0.5 - (double)X_RES / 2.0)
-			/ ((double)X_RES / 2.0)) + game->angle * PI / 180;
-	x = ceil(game->x_pos);
-	y = ceil(game->y_pos);
-	return (raycast_find_wall(game, x, y, angle));
+	ray_set_alpha(game, ray);
+	x = floor(game->x_pos) + game->rays[ray]->d_x_sign;
+	y = floor(game->y_pos) + game->rays[ray]->d_y_sign;
+	return (raycast_find_wall(game, x, y, ray));
+	return (game->rays[ray]->alpha);
 }

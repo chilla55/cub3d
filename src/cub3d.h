@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/05 21:10:27 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/07 22:33:48 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@
 # define PI (double)3.1415926
 
 # define TILE_SIZE	42
+# define POS_SIGN 1;
+# define NEG_SIGN 0;
+
 
 /*
 ** 0 for an empty space,
@@ -55,11 +58,16 @@
 */
 
 typedef struct s_ray {
+	double	alpha_0;
 	double	alpha;
 	double	x;
 	double	y;
+	int		d_x_sign;
+	int		d_y_sign;
 	double	d_x;
 	double	d_y;
+	double	distance;
+	int 	height;
 	char	wallface;
 	int		h_pixel;
 }				t_ray;
@@ -141,5 +149,6 @@ void	skip_lines(t_game *game, int fd);
 
 // raycasting.c
 void	raycaster_init(t_game *game);
+double	raycast_ray_init(t_game *game, int ray);
 
 #endif

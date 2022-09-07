@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 08:41:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/05 21:10:01 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/07 22:58:10 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,15 @@ static int	key_hook(int key, void *game_void)
 	if (key == 65307) // ESC key in UNIX
 		game_exit (game, 65307);
 	if (key == 65361) // left arrow in UNIX
+	{
+		game->angle -=5;
 		key = '<';
+	}
 	if (key == 65363) // right arrow in UNIX
+		{
+		game->angle +=5;
 		key = '>';
+	}
 	if (ft_strchr("wasd<>", key))
 	{
 		write(1, "\r", 1);
@@ -47,29 +53,107 @@ static int	key_hook(int key, void *game_void)
 ** of the window.
 */
 
-/*
-static int	ft_looping(void *map_void)
+void	fill_buffer(t_game *game)
 {
-	t_map	*map;
+	int pixel_bits;
+	int line_bytes;
+	int endian;
+	char *buffer = mlx_get_data_addr(game->frame_buffer, &pixel_bits, &line_bytes, &endian);
+	int color = 0xABCDEF;
+	int color_2 = 0x123456;
+	int color_3 = 0x456789;
+for(int x = 0; x < X_RES; ++x)
+for(int y = 0; y < Y_RES; ++y)
+{
+    int pixel = (y * line_bytes) + (x * 4);
 
-	map = ((t_map *)map_void);
-	if (map->redraw == 1)
-		ft_mlx_draw_map(map);
-	map->redraw = 0;
+	if (y < Y_RES / 2 - game->rays[x]->height)
 	{
-		if (ft_input_generator(map))
-		{
-			ft_move_g(map, map->g_key);
-			ft_t_map_print(map);
-			ft_redraw_g(map);
-		}
-		ft_redraw_p(map);
-		ft_twinkle_animation(map);
+	    if (endian == 1)        // Most significant (Alpha) byte first
+	    {
+    	    buffer[pixel + 0] = (color >> 24);
+        	buffer[pixel + 1] = (color >> 16) & 0xFF;
+	        buffer[pixel + 2] = (color >> 8) & 0xFF;
+    	    buffer[pixel + 3] = (color) & 0xFF;
+    	}
+    	else if (endian == 0)   // Least significant (Blue) byte first
+    	{
+        	buffer[pixel + 0] = (color) & 0xFF;
+	        buffer[pixel + 1] = (color >> 8) & 0xFF;
+    	    buffer[pixel + 2] = (color >> 16) & 0xFF;
+        	buffer[pixel + 3] = (color >> 24);
+    	}
 	}
-	usleep(30000);
+	else if (y >= Y_RES / 2 - game->rays[x]->height &&
+		y < Y_RES / 2 + game->rays[x]->height )
+	{
+	    if (endian == 1)        // Most significant (Alpha) byte first
+	    {
+    	    buffer[pixel + 0] = (color_2 >> 24);
+        	buffer[pixel + 1] = (color_2 >> 16) & 0xFF;
+	        buffer[pixel + 2] = (color_2 >> 8) & 0xFF;
+    	    buffer[pixel + 3] = (color_2) & 0xFF;
+    	}
+    	else if (endian == 0)   // Least significant (Blue) byte first
+    	{
+        	buffer[pixel + 0] = (color_2) & 0xFF;
+	        buffer[pixel + 1] = (color_2 >> 8) & 0xFF;
+    	    buffer[pixel + 2] = (color_2 >> 16) & 0xFF;
+        	buffer[pixel + 3] = (color_2 >> 24);
+    	}
+	}
+	else
+	{
+	    if (endian == 1)        // Most significant (Alpha) byte first
+	    {
+    	    buffer[pixel + 0] = (color_3 >> 24);
+        	buffer[pixel + 1] = (color_3 >> 16) & 0xFF;
+	        buffer[pixel + 2] = (color_3 >> 8) & 0xFF;
+    	    buffer[pixel + 3] = (color_3) & 0xFF;
+    	}
+    	else if (endian == 0)   // Least significant (Blue) byte first
+    	{
+        	buffer[pixel + 0] = (color_3) & 0xFF;
+	        buffer[pixel + 1] = (color_3 >> 8) & 0xFF;
+    	    buffer[pixel + 2] = (color_3 >> 16) & 0xFF;
+        	buffer[pixel + 3] = (color_3 >> 24);
+    	}
+	}
+}
+}
+
+static int	game_loop(void *game_void)
+{
+	t_game	*game;
+
+	game = ((t_game *)game_void);
+	int	i = 0;
+	printf("\nCalculating current ray directions\n");
+	while (i < X_RES)
+	{
+//		raycast_ray_init(game, i);
+		game->rays[i]->distance = raycast_ray_init(game, i);
+		game->rays[i]->height = (int)(Y_RES / 2 / game->rays[i]->distance);
+		i++;
+	}
+	fill_buffer(game);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame_buffer, 0, 0);
+//	if (map->redraw == 1)
+//		ft_mlx_draw_map(map);
+//	map->redraw = 0;
+//	{
+//		if (ft_input_generator(map))
+//		{
+	// 		ft_move_g(map, map->g_key);
+	// 		ft_t_map_print(map);
+	// 		ft_redraw_g(map);
+	// 	}
+	// 	ft_redraw_p(map);
+	// 	ft_twinkle_animation(map);
+	// }
 	return (0);
 }
-*/
+
 
 /*
 ** All tiles of the map are drawn into the window.
@@ -135,7 +219,73 @@ void	game_mlx_init(t_game *game)
 	mlx_hook(game->mlx_win, 17, (1L << 17), exitclick, game);
 	load_images(game);
 	load_start_screen(game);
+
+	int pixel_bits;
+	int line_bytes;
+	int endian;
+	char *buffer = mlx_get_data_addr(game->frame_buffer, &pixel_bits, &line_bytes, &endian);
+	int color = 0xABCDEF;
+	int color_2 = 0x123456;
+	int color_3 = 0x456789;
+for(int x = 0; x < X_RES; ++x)
+for(int y = 0; y < Y_RES; ++y)
+{
+    int pixel = (y * line_bytes) + (x * 4);
+
+	if (y < Y_RES / 2 - game->rays[x]->height)
+	{
+	    if (endian == 1)        // Most significant (Alpha) byte first
+	    {
+    	    buffer[pixel + 0] = (color >> 24);
+        	buffer[pixel + 1] = (color >> 16) & 0xFF;
+	        buffer[pixel + 2] = (color >> 8) & 0xFF;
+    	    buffer[pixel + 3] = (color) & 0xFF;
+    	}
+    	else if (endian == 0)   // Least significant (Blue) byte first
+    	{
+        	buffer[pixel + 0] = (color) & 0xFF;
+	        buffer[pixel + 1] = (color >> 8) & 0xFF;
+    	    buffer[pixel + 2] = (color >> 16) & 0xFF;
+        	buffer[pixel + 3] = (color >> 24);
+    	}
+	}
+	else if (y >= Y_RES / 2 - game->rays[x]->height &&
+		y < Y_RES / 2 + game->rays[x]->height )
+	{
+	    if (endian == 1)        // Most significant (Alpha) byte first
+	    {
+    	    buffer[pixel + 0] = (color_2 >> 24);
+        	buffer[pixel + 1] = (color_2 >> 16) & 0xFF;
+	        buffer[pixel + 2] = (color_2 >> 8) & 0xFF;
+    	    buffer[pixel + 3] = (color_2) & 0xFF;
+    	}
+    	else if (endian == 0)   // Least significant (Blue) byte first
+    	{
+        	buffer[pixel + 0] = (color_2) & 0xFF;
+	        buffer[pixel + 1] = (color_2 >> 8) & 0xFF;
+    	    buffer[pixel + 2] = (color_2 >> 16) & 0xFF;
+        	buffer[pixel + 3] = (color_2 >> 24);
+    	}
+	}
+	else
+	{
+	    if (endian == 1)        // Most significant (Alpha) byte first
+	    {
+    	    buffer[pixel + 0] = (color_3 >> 24);
+        	buffer[pixel + 1] = (color_3 >> 16) & 0xFF;
+	        buffer[pixel + 2] = (color_3 >> 8) & 0xFF;
+    	    buffer[pixel + 3] = (color_3) & 0xFF;
+    	}
+    	else if (endian == 0)   // Least significant (Blue) byte first
+    	{
+        	buffer[pixel + 0] = (color_3) & 0xFF;
+	        buffer[pixel + 1] = (color_3 >> 8) & 0xFF;
+    	    buffer[pixel + 2] = (color_3 >> 16) & 0xFF;
+        	buffer[pixel + 3] = (color_3 >> 24);
+    	}
+	}
+}
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame_buffer, 0, 0);
-//	mlx_loop_hook(game->mlx, ft_looping, game);
+	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);
 }
