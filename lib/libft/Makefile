@@ -10,6 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
+DEBUG ?= 0
+ifeq ($(DEBUG), 1)
+    CC_FLAGS 	=	-g -ggdb -Wall -Wextra -Werror
+else
+	CC_FLAGS	=	-Wall -Wextra -Werror
+endif
+
 
 FTS	=	ft_memset		\
 		ft_bzero		\
@@ -58,7 +65,6 @@ OBJS_DIR = objs/
 OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -Werror
 
 $(OBJS_DIR)%.o : %.c libft.h
 	@mkdir -p $(OBJS_DIR)

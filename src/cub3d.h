@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/07 22:33:48 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/15 15:01:11 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	ft_redraw_c(t_map *map, int pos);
 
 // game_init.c
 t_game	*game_init(char *path);
-int		open_cub(char *path);
+int	open_cub(t_game *game, char *path);
 void	set_player_pos(t_game *game, int x, int y);
 
 // map_test.c
@@ -136,16 +136,14 @@ void	map_test(t_game *game);
 
 // load_cub_1.c
 void	get_size(t_game *game, int fd);
-void	get_no_texture(t_game *game, int fd);
-void	get_so_texture(t_game *game, int fd);
-void	get_ea_texture(t_game *game, int fd);
-void	get_we_texture(t_game *game, int fd);
 
 // load_cub_2.c
-void	get_f_color(t_game *game, int fd);
-void	get_c_color(t_game *game, int fd);
 void	skip_empty_line(t_game *game, int fd);
-void	skip_lines(t_game *game, int fd);
+void	skip_lines(t_game *game, int fd, int lts);
+
+// map/parse.c
+void	parse_option(int fd, t_game *game, int *i);
+void	parse_map(int fd, t_game *game, int i);
 
 // raycasting.c
 void	raycaster_init(t_game *game);

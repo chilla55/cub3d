@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+         #
+#    By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 03:58:29 by agrotzsc          #+#    #+#              #
-#    Updated: 2022/09/02 00:24:12 by skorte           ###   ########.fr        #
+#    Updated: 2022/09/14 12:50:46 by agrotzsc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ mlx_clean:
 	cd $(MLX_DIR) && ./configure clean
 
 libft_all:
-	cd $(LIBFT_DIR) && make
+	cd $(LIBFT_DIR) && make DEBUG=$(DEBUG)
 
 libft_fclean:
 	cd $(LIBFT_DIR) && make fclean

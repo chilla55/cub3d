@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 19:47:07 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/05 20:24:41 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/14 12:43:35 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	map_test(t_game *game)
 		j = 0;
 		while (j < (int)ft_strlen(game->map[i]))
 		{
-			if (!ft_strchr("10NWSE \n", game->map[i][j]))
+			if (!ft_strchr("10NWSE \n\0", game->map[i][j]))
 				game_exit(game, -1);
 			if (ft_strchr("0NWSE", game->map[i][j]))
 			{
