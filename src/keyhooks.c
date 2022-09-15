@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:21:52 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/15 19:18:33 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/15 21:20:40 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,21 @@ int	key_hook(int key, void *game_void)
 ** Returns 0 if no corresponding key was detected
 ** or if the movement would end inside a wall.
 */
+static int	check_new_pos(t_game *game, double new_x_pos, double new_y_pos)
+{
+	if (game->map[(int)floor(new_y_pos)][(int)floor(new_x_pos)] != '1')
+	{
+		game->x_pos = new_x_pos;
+		game->y_pos = new_y_pos;
+	}
+	else if (game->map[(int)floor(new_y_pos)][(int)floor(game->x_pos)] != '1')
+		game->y_pos = new_y_pos;
+	else if (game->map[(int)floor(game->y_pos)][(int)floor(new_x_pos)] != '1')
+		game->x_pos = new_x_pos;
+	else
+		return (0);
+	return (1);
+}
 
 static int	move_pos(t_game *game, int key)
 {
@@ -64,14 +79,8 @@ static int	move_pos(t_game *game, int key)
 		return (0);
 	direction += game->angle;
 	new_x_pos = game->x_pos + step_size * cos(cal_radian(direction));
-	new_y_pos = game->y_pos + step_size * -sin(cal_radian(direction));
-	if (game->map[(int)ceil(new_x_pos)][(int)ceil(new_y_pos)] != '1')
-	{
-		game->x_pos = new_x_pos;
-		game->y_pos = new_y_pos;
-		return (1);
-	}
-	return (0);
+	new_y_pos = game->y_pos + step_size * sin(cal_radian(direction));
+	return (check_new_pos(game, new_x_pos, new_y_pos));
 }
 
 /*
