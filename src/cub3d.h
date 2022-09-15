@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/15 15:01:11 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:39:18 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,10 @@ typedef struct s_game {
 	char	*image_paths[4];
 	void	*mlx_images[4];
 	void	*frame_buffer;
+	char	*buffer;
+	int		pixel_bits;
+	int		line_bytes;
+	int		endian;
 }				t_game;
 
 // exit.c

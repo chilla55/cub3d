@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 23:53:11 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/15 19:34:54 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/15 19:56:00 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,33 @@
 	each needs distance to wall, type of wall face (NSWE),
 	and point on wall (between 0 and 1 to extract from texture)
 */
+void	raycaster_cal_default_angles(t_game *game)
+{
+	int		i;
+
+	i = 0;
+	while (i < X_RES)
+	{
+		game->rays[i] = malloc(sizeof(t_ray));
+		game->rays[i]->alpha_0 = atan(((double)i + 0.5 - (double)X_RES / 2.0)
+				/ ((double)X_RES / 2.0));
+		i++;
+	}
+}
 
 void	raycaster_init(t_game *game)
 {
 	int		i;
 
 	i = 0;
-	printf("\nCalculating default ray directions (only needs to be once done at the beginning)\n");
 	while (i < X_RES)
 	{
 		game->rays[i] = malloc(sizeof(t_ray));
-		game->rays[i]->alpha_0 = atan(((double)i + 0.5 - (double)X_RES / 2.0)
-				/ ((double)X_RES / 2.0));
-		printf("%f \n", cal_degree(game->rays[i]->alpha_0));
+		if (game->rays[i] == NULL)
+			game_exit(game, -10);  // exitmode not defined yet
 		i++;
 	}
+	raycaster_cal_default_angles(game);
 	i = 0;
 	while (i < X_RES)
 	{
