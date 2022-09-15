@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   angle_helpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 14:59:31 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/09/15 19:34:49 by skorte           ###   ########.fr       */
+/*   Created: 2022/09/15 17:20:27 by skorte            #+#    #+#             */
+/*   Updated: 2022/09/15 19:34:58 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "cub3d.h"
 
-int	main(int argc, char **argv)
-{
-	t_game	*game;
+/*
+** Conversion between angles in degree and radian measure.
+*/
 
-	printf("CUB3D\n");
-	game = NULL;
-	if (argc != 2)
-		return (-1);
-	game = game_init(argv[1]);
-	raycaster_init(game);
-	game_mlx_init(game);
-	game_exit(game, 0);
-	return (0);
+double	cal_radian(double degree)
+{
+	return (degree / 180 * PI);
+}
+
+double	cal_degree(double radian)
+{
+	return (radian * 180 / PI);
 }

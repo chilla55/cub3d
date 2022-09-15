@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/26 19:52:43 by skorte            #+#    #+#             */
-/*   Updated: 2022/04/06 10:52:57 by skorte           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <unistd.h>
@@ -49,17 +37,10 @@
 # define NEG_SIGN 0;
 
 
-/*
-** 0 for an empty space,
-** 1 for a wall,
-** NSWE for the Player’s starting position and orientation.
-** *mlx pointer for the MinilibX components
-** **X[] pointers to load all neccessary image files
-*/
 
 typedef struct s_ray {
-	double	alpha_0;
-	double	alpha;
+	double	alpha_0; // angle from the main direction. Calculated once at game start.
+	double	alpha;  // angle of the ray in the map, the sum of game->angle and alpha_0.
 	double	x;
 	double	y;
 	int		d_x_sign;
@@ -67,10 +48,24 @@ typedef struct s_ray {
 	double	d_x;
 	double	d_y;
 	double	distance;
-	int 	height;
-	char	wallface;
-	int		h_pixel;
+	int 	height; // apparent wall height, calculated from distance and direction.
+	char	wallface; // N, E, S or W, defining the texture of the wall.
+	double	h_pixel;  // between 0 and 1, defining the place where the ray hits the wall.
 }				t_ray;
+
+/*
+** **map:
+** 	0 for an empty space,
+** 	1 for a wall,
+** 	NSWE for the Player’s starting position and orientation.
+**
+** x_pos, y_pos, angle for the current camera position/orientation.
+**
+** Pointers to all ray structs.
+**
+** *mlx pointer for the MinilibX components
+** **X[] pointers to load all neccessary image files
+*/
 
 typedef struct s_game {
 	char	**map;
@@ -94,37 +89,11 @@ typedef struct s_game {
 int		exitclick(void *game);
 void	game_exit(t_game *game, int exitmode);
 
-/*
-// ft_move.c
-void	ft_move_g(t_map *map, int key);
-void	ft_move_p(t_map *map, int key);
-int		ft_input_generator(t_map *map);
-void	ft_guard_pos_generator(t_map *map);
-*/
-
 // mlx_init.c
 void	game_mlx_init(t_game *game);
 
 void	load_images(t_game *game);
 void	load_start_screen(t_game *game);
-
-//void	ft_mlx_draw_map(t_map *map);
-/*
-// ft_put_draw.c
-void	ft_put_image_2(void *img, int pos, t_map *map);
-void	ft_draw_win(t_map *map);
-void	ft_draw_caught(t_map *map);
-void	ft_draw_step_count(t_map *map);
-void	ft_twinkle_animation(t_map *map);
-
-// ft_redraw.c
-void	ft_redraw_p(t_map *map);
-void	ft_redraw_g(t_map *map);
-void	ft_redraw_0(t_map *map, int pos);
-void	ft_redraw_1(t_map *map, int pos);
-void	ft_redraw_c(t_map *map, int pos);
-
-*/
 
 // game_init.c
 t_game	*game_init(char *path);
@@ -148,5 +117,16 @@ void	parse_map(int fd, t_game *game, int i);
 // raycasting.c
 void	raycaster_init(t_game *game);
 double	raycast_ray_init(t_game *game, int ray);
+
+// angle_helpers.c
+double	cal_degree(double radian);
+double	cal_radian(double degree);
+
+// keyhooks.c
+int		key_hook(int key, void *game_void);
+
+
+int		game_loop(t_game *game);
+void	fill_buffer(t_game *game);
 
 #endif
