@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/15 20:39:18 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/15 22:07:23 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	parse_map(int fd, t_game *game, int i);
 
 // raycasting.c
 void	raycaster_init(t_game *game);
-double	raycast_ray_init(t_game *game, int ray);
+void	raycasting(t_game *game);
 
 // angle_helpers.c
 double	cal_degree(double radian);

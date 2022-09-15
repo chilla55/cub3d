@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 08:41:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/15 20:57:11 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/15 22:21:35 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void	draw_minimap(t_game *game)
 	{
 		if (y / 2 == (int)(game->y_pos * 10 / 2) && x / 2 == (int)(game->x_pos * 10 / 2))
 			draw_pixel(game, color, x, y);
+		else if (y / 2 == (int)(game->rays[640]->y * 10 / 2) && x / 2 == (int)(game->rays[640]->x * 10 / 2))
+			draw_pixel(game, 0xEFCDAB, x, y);
 		else if ((game->map[y/10][x/10]) == '1')
 			draw_pixel(game, color_2, x, y);
 		else
