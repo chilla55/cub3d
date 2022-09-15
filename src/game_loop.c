@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 14:59:31 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/09/15 19:34:49 by skorte           ###   ########.fr       */
+/*   Created: 2022/09/15 17:41:16 by skorte            #+#    #+#             */
+/*   Updated: 2022/09/15 19:34:48 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "cub3d.h"
 
-int	main(int argc, char **argv)
+int	game_loop(t_game *game)
 {
-	t_game	*game;
-
-	printf("CUB3D\n");
-	game = NULL;
-	if (argc != 2)
-		return (-1);
-	game = game_init(argv[1]);
-	raycaster_init(game);
-	game_mlx_init(game);
-	game_exit(game, 0);
+	int	i;
+	
+	i = 0;
+	while (i < X_RES)
+	{
+		game->rays[i]->distance = raycast_ray_init(game, i);
+		game->rays[i]->height = (int)(Y_RES / 2 / game->rays[i]->distance);
+		i++;
+	}
+	fill_buffer(game);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame_buffer, 0, 0);
 	return (0);
 }

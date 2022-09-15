@@ -6,11 +6,15 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 19:05:50 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/05 21:31:49 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/15 19:20:51 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/*
+** Loads the *.xpm textures into mlx-images linked in the game struct.
+*/
 
 void	load_images(t_game *game)
 {
@@ -33,9 +37,10 @@ void	load_images(t_game *game)
 void	load_start_screen(t_game *game)
 {
 	int	x_res;
-	int y_res;
+	int	y_res;
 
 	x_res = X_RES;
 	y_res = Y_RES;
-	game->frame_buffer = mlx_xpm_file_to_image(game->mlx, "./img/cubs.xpm", &x_res, &y_res);
+	game->frame_buffer = mlx_xpm_file_to_image
+		(game->mlx, "./img/cubs.xpm", &x_res, &y_res);
 }
