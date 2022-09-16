@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/15 22:07:23 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:32:27 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,23 @@
 # define POS_SIGN 1;
 # define NEG_SIGN 0;
 
+# define MOV_STEP 0.1;
+# define ANGLE_STEP 5.0;
 
+/*
+** t_ray struct, contains the data for one ray.
+** It will be used to draw one vertical pixel line.
+**
+** alpha_0 =  angle from the main direction. Calculated once at game start.
+** alpha = angle of the ray in the map, the sum of game->angle and alpha_0.
+** height = apparent wall height, calculated from distance and direction.
+** wallface = N, E, S or W, defining the texture of the wall.
+** h_pixel = between 0 and 1, defining the place where the ray hits the wall.
+*/
 
 typedef struct s_ray {
-	double	alpha_0; // angle from the main direction. Calculated once at game start.
-	double	alpha;  // angle of the ray in the map, the sum of game->angle and alpha_0.
+	double	alpha_0;
+	double	alpha;
 	double	x;
 	double	y;
 	int		d_x_sign;
@@ -48,9 +60,9 @@ typedef struct s_ray {
 	double	d_x;
 	double	d_y;
 	double	distance;
-	int 	height; // apparent wall height, calculated from distance and direction.
-	char	wallface; // N, E, S or W, defining the texture of the wall.
-	double	h_pixel;  // between 0 and 1, defining the place where the ray hits the wall.
+	int		height;
+	char	wallface;
+	double	h_pixel;
 }				t_ray;
 
 /*
@@ -101,7 +113,7 @@ void	load_start_screen(t_game *game);
 
 // game_init.c
 t_game	*game_init(char *path);
-int	open_cub(t_game *game, char *path);
+int		open_cub(t_game *game, char *path);
 void	set_player_pos(t_game *game, int x, int y);
 
 // map_test.c
@@ -128,7 +140,6 @@ double	cal_radian(double degree);
 
 // keyhooks.c
 int		key_hook(int key, void *game_void);
-
 
 int		game_loop(t_game *game);
 void	fill_buffer(t_game *game);

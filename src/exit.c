@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:39:05 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 11:04:25 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:35:58 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 
 static void	credits(void)
 {
-	write(STDOUT_FILENO, &"\nGraphics credits:\n", 19); // Fill in!
-	write(STDOUT_FILENO, &" Start screen: Walt Disney's Jungle Book (1967)\n", 48); // Fill in!
+	int	fd;
+
+	fd = STDOUT_FILENO;
+	write(fd, &"\nGraphics credits:\n", 19);
+	write(fd, &" Start screen: Walt Disney's Jungle Book (1967)\n", 48);
 }
 
 /*

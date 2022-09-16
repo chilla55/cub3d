@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 19:47:07 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/14 12:43:35 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/09/16 14:33:09 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 /*
 ** Tests if the cubfile contains a valid map.

@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:21:52 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 11:12:20 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:14:13 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,20 @@ static int	move_pos(t_game *game, int key)
 	double	new_x_pos;
 	double	new_y_pos;
 
-	step_size = 0.1;
+	step_size = MOV_STEP;
 	if (key == 'w')
 		direction = 270;
 	else if (key == 'a')
-		direction = 0;
+		direction = 180;
 	else if (key == 's')
 		direction = 90;
 	else if (key == 'd')
-		direction = 180;
+		direction = 0;
 	else
 		return (0);
 	direction += game->angle;
 	new_x_pos = game->x_pos + step_size * cos(cal_radian(direction));
-	new_y_pos = game->y_pos + step_size * - sin(cal_radian(direction));
+	new_y_pos = game->y_pos + step_size * sin(cal_radian(direction));
 	return (check_new_pos(game, new_x_pos, new_y_pos));
 }
 
@@ -79,7 +79,18 @@ static int	move_pos(t_game *game, int key)
 
 static int	check_new_pos(t_game *game, double new_x_pos, double new_y_pos)
 {
-	if (game->map[(int)floor(new_y_pos)][(int)floor(new_x_pos)] != '1')
+	double	margin;
+
+	margin = MOV_STEP;
+	margin /= 2;
+	if (game->map[(int)floor(new_y_pos + margin)]
+		[(int)floor(new_x_pos + margin)] != '1'
+		&& game->map[(int)floor(new_y_pos - margin)]
+		[(int)floor(new_x_pos + margin)] != '1'
+		&& game->map[(int)floor(new_y_pos + margin)]
+		[(int)floor(new_x_pos - margin)] != '1'
+		&& game->map[(int)floor(new_y_pos - margin)]
+		[(int)floor(new_x_pos - margin)] != '1')
 	{
 		game->x_pos = new_x_pos;
 		game->y_pos = new_y_pos;
@@ -103,7 +114,7 @@ static int	rot_pos(t_game *game, int key)
 {
 	double	step_size;
 
-	step_size = 5;
+	step_size = ANGLE_STEP;
 	if (key == 65363)
 		game->angle += step_size;
 	else if (key == 65361)

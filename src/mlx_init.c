@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 08:41:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/15 22:21:35 by skorte           ###   ########.fr       */
+/*   Created: 2022/09/16 14:27:36 by skorte            #+#    #+#             */
+/*   Updated: 2022/09/16 14:44:07 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	draw_pixel(t_game *game, int color, int x, int y)
 {
-	int pixel;
-	
+	int	pixel;
+
 	pixel = (y * game->line_bytes) + (x * 4);
-	if (game->endian == 1)        // Most significant (Alpha) byte first
+	if (game->endian == 1)
 	{
 		game->buffer[pixel + 0] = (color >> 24);
 		game->buffer[pixel + 1] = (color >> 16) & 0xFF;
 		game->buffer[pixel + 2] = (color >> 8) & 0xFF;
 		game->buffer[pixel + 3] = (color) & 0xFF;
 	}
-	else if (game->endian == 0)   // Least significant (Blue) byte first
+	else if (game->endian == 0)
 	{
 		game->buffer[pixel + 0] = (color) & 0xFF;
 		game->buffer[pixel + 1] = (color >> 8) & 0xFF;
@@ -36,38 +36,64 @@ void	draw_pixel(t_game *game, int color, int x, int y)
 
 static void	draw_minimap(t_game *game)
 {
-	int color = 0x0BCDEF;
-	int color_2 = 0x123456;
-	int color_3 = 0x456789;
-	for(int x = 0; x < game->width * 10; ++x)
-	for(int y = 0; y < game->height * 10; ++y)
+	int	color;
+	int	color_2;
+	int	color_3;
+	int	x;
+	int	y;
+
+	color = 0x0BCDEF;
+	color_2 = 0x123456;
+	color_3 = 0x456789;
+	x = 0;
+	while (x < game->width * 10)
 	{
-		if (y / 2 == (int)(game->y_pos * 10 / 2) && x / 2 == (int)(game->x_pos * 10 / 2))
-			draw_pixel(game, color, x, y);
-		else if (y / 2 == (int)(game->rays[640]->y * 10 / 2) && x / 2 == (int)(game->rays[640]->x * 10 / 2))
-			draw_pixel(game, 0xEFCDAB, x, y);
-		else if ((game->map[y/10][x/10]) == '1')
-			draw_pixel(game, color_2, x, y);
-		else
-			draw_pixel(game, color_3, x, y);
+		y = 0;
+		while (y < game->height * 10)
+		{
+			if (y / 2 == (int)(game->y_pos * 10 / 2)
+				&& x / 2 == (int)(game->x_pos * 10 / 2))
+				draw_pixel(game, color, x, y);
+			else if (y / 2 == (int)(game->rays[640]->y * 10 / 2)
+				&& x / 2 == (int)(game->rays[640]->x * 10 / 2))
+				draw_pixel(game, 0xEFCDAB, x, y);
+			else if ((game->map[y / 10][x / 10]) == '1')
+				draw_pixel(game, color_2, x, y);
+			else
+				draw_pixel(game, color_3, x, y);
+			y++;
+		}
+		x++;
 	}
 }
 
 void	fill_buffer(t_game *game)
 {
-	int color = 0xABCDEF;
-	int color_2 = 0x123456;
-	int color_3 = 0x456789;
-	for(int x = 0; x < X_RES; ++x)
-	for(int y = 0; y < Y_RES; ++y)
+	int	color;
+	int	color_2;
+	int	color_3;
+	int	x;
+	int	y;
+
+	color = 0xABCDEF;
+	color_2 = 0x123456;
+	color_3 = 0x456789;
+	x = 0;
+	while (x < X_RES)
 	{
-		if (y < Y_RES / 2 - game->rays[x]->height)
-			draw_pixel(game, color, x, y);
-		else if (y >= Y_RES / 2 - game->rays[x]->height &&
-			y < Y_RES / 2 + game->rays[x]->height )
-			draw_pixel(game, color_2, x, y);
-		else
-			draw_pixel(game, color_3, x, y);
+		y = 0;
+		while (y < Y_RES)
+		{
+			if (y < Y_RES / 2 - game->rays[x]->height)
+				draw_pixel(game, color, x, y);
+			else if (y >= Y_RES / 2 - game->rays[x]->height
+				&& y < Y_RES / 2 + game->rays[x]->height)
+				draw_pixel(game, color_2, x, y);
+			else
+				draw_pixel(game, color_3, x, y);
+			y++;
+		}
+		x++;
 	}
 	draw_minimap(game);
 }
@@ -76,19 +102,19 @@ void	fill_buffer(t_game *game)
 ** On expose events, the whole map gets redrawn.
 */
 
-int		win_redraw(void *game_void)
+int	win_redraw(void *game_void)
 {
 	t_game	*game;
 
 	game = ((t_game *)game_void);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame_buffer, 0, 0);
-	return (0);	
+	return (0);
 }
 
 static void	buffer_init(t_game *game)
 {
 	game->buffer = mlx_get_data_addr(game->frame_buffer,
-		&game->pixel_bits, &game->line_bytes, &game->endian);
+			&game->pixel_bits, &game->line_bytes, &game->endian);
 }
 
 /*

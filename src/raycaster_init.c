@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 21:46:07 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 11:03:52 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:12:51 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	raycaster_init(t_game *game)
 	{
 		game->rays[i] = malloc(sizeof(t_ray));
 		if (game->rays[i] == NULL)
-			game_exit(game, -10);// exitmode not defined yet
+			game_exit(game, -42);
 		i++;
 	}
 	raycaster_cal_default_angles(game);
