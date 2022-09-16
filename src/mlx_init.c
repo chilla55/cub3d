@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:27:36 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 14:44:07 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/16 21:42:46 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,20 @@ static void	draw_minimap(t_game *game)
 void	fill_buffer(t_game *game)
 {
 	int	color;
-	int	color_2;
 	int	color_3;
+	int	color_N;
+	int	color_S;
+	int	color_W;
+	int	color_E;
 	int	x;
 	int	y;
 
 	color = 0xABCDEF;
-	color_2 = 0x123456;
 	color_3 = 0x456789;
+	color_N = 0x0234F6;
+	color_S = 0x423096;
+	color_W = 0x823846;
+	color_E = 0xB23B06;
 	x = 0;
 	while (x < X_RES)
 	{
@@ -88,7 +94,16 @@ void	fill_buffer(t_game *game)
 				draw_pixel(game, color, x, y);
 			else if (y >= Y_RES / 2 - game->rays[x]->height
 				&& y < Y_RES / 2 + game->rays[x]->height)
-				draw_pixel(game, color_2, x, y);
+			{
+				if (game->rays[x]->wallface == 'N')
+					draw_pixel(game, color_N, x, y);
+				else if (game->rays[x]->wallface == 'S')
+					draw_pixel(game, color_S, x, y);
+				else if (game->rays[x]->wallface == 'W')
+					draw_pixel(game, color_W, x, y);
+				else
+					draw_pixel(game, color_E, x, y);
+			}
 			else
 				draw_pixel(game, color_3, x, y);
 			y++;

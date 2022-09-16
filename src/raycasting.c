@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 23:53:11 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 14:26:51 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/16 21:36:25 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int		check_x_wall(t_game *game, t_ray *ray);
 static int		check_y_wall(t_game *game, t_ray *ray);
 static double	raycast_find_wall(t_game *game, int ray);
 void			ray_set_alpha(t_game *game, int ray);
+void			ray_set_wall_face(t_game *game, int ray, char c);
 
 void	raycasting(t_game *game)
 {
@@ -50,6 +51,7 @@ double	raycast_find_wall(t_game *game, int ray)
 		{
 			game->rays[ray]->y = game->y_pos
 				- game->rays[ray]->d_x * cos (game->rays[ray]->alpha);
+			ray_set_wall_face(game, ray, 'x');
 			return (game->rays[ray]->d_x);
 		}
 		if (x > game->x_pos)
@@ -63,6 +65,7 @@ double	raycast_find_wall(t_game *game, int ray)
 		{
 			game->rays[ray]->x = game->x_pos
 				+ game->rays[ray]->d_y * sin (game->rays[ray]->alpha);
+			ray_set_wall_face(game, ray, 'y');
 			return (game->rays[ray]->d_y);
 		}
 		if (y > game->y_pos)
@@ -107,4 +110,22 @@ void	ray_set_alpha(t_game *game, int ray)
 	if (PI / 2 < game->rays[ray]->alpha && game->rays[ray]->alpha <= 3 * PI / 2)
 		game->rays[ray]->d_y_sign = POS_SIGN;
 	return ;
+}
+
+void	ray_set_wall_face(t_game *game, int ray, char c)
+{
+	if (c == 'x')
+	{
+		if (game->rays[ray]->d_x_sign == 1)
+			game->rays[ray]->wallface = 'S';
+		else
+			game->rays[ray]->wallface = 'N';			
+	}
+	else
+	{
+		if (game->rays[ray]->d_y_sign == 1)
+			game->rays[ray]->wallface = 'E';
+		else
+			game->rays[ray]->wallface = 'W';			
+	}
 }
