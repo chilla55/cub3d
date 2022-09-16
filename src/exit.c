@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:39:05 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/05 21:15:12 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/16 11:04:25 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	game_exit(t_game *game, int exitmode)
 		i = 0;
 		while (i < X_RES)
 		{
-			if (game->rays[i])
+			if (game->rays[i] != NULL)
 				free (game->rays[i]);
 			i++;
 		}

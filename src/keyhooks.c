@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:21:52 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/15 21:43:25 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/16 11:12:20 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	move_pos(t_game *game, int key)
 		return (0);
 	direction += game->angle;
 	new_x_pos = game->x_pos + step_size * cos(cal_radian(direction));
-	new_y_pos = game->y_pos + step_size * sin(cal_radian(direction));
+	new_y_pos = game->y_pos + step_size * - sin(cal_radian(direction));
 	return (check_new_pos(game, new_x_pos, new_y_pos));
 }
 
