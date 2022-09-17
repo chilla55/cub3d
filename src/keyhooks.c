@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:21:52 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 14:14:13 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/17 23:55:22 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,32 @@ static int	check_new_pos(t_game *game, double new_x_pos, double new_y_pos);
 int	key_hook(int key, void *game_void)
 {
 	t_game	*game;
+	int		i;
 
 	game = ((t_game *)game_void);
-	if (move_pos(game, key))
-		game_loop(game);
-	else if (rot_pos(game, key))
-		game_loop(game);
-	else if (key == 65307)
+	if (key == 65307)
 		game_exit (game, 65307);
+	i = 0;
+	while (i < SUB_STEPS)
+	{
+		if (move_pos(game, key))
+			game_loop(game);
+		else if (rot_pos(game, key))
+			game_loop(game);
+		else
+			break ;
+		i++;
+	}
+	return (0);
+}
+
+/*
+** Hitting the "X" in the upper right corner of the window runs a normal exit.
+*/
+
+int	exitclick(void *game)
+{
+	game_exit((t_game *)game, 0);
 	return (0);
 }
 
@@ -54,6 +72,7 @@ static int	move_pos(t_game *game, int key)
 	double	new_y_pos;
 
 	step_size = MOV_STEP;
+	step_size /= SUB_STEPS;
 	if (key == 'w')
 		direction = 270;
 	else if (key == 'a')
@@ -82,6 +101,7 @@ static int	check_new_pos(t_game *game, double new_x_pos, double new_y_pos)
 	double	margin;
 
 	margin = MOV_STEP;
+	margin /= SUB_STEPS;
 	margin /= 2;
 	if (game->map[(int)floor(new_y_pos + margin)]
 		[(int)floor(new_x_pos + margin)] != '1'
@@ -115,6 +135,7 @@ static int	rot_pos(t_game *game, int key)
 	double	step_size;
 
 	step_size = ANGLE_STEP;
+	step_size /= SUB_STEPS;
 	if (key == 65363)
 		game->angle += step_size;
 	else if (key == 65361)

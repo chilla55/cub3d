@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 23:53:11 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 21:36:25 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/17 23:57:19 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,13 @@ void	ray_set_wall_face(t_game *game, int ray, char c)
 		if (game->rays[ray]->d_x_sign == 1)
 			game->rays[ray]->wallface = 'S';
 		else
-			game->rays[ray]->wallface = 'N';			
+			game->rays[ray]->wallface = 'N';
 	}
 	else
 	{
 		if (game->rays[ray]->d_y_sign == 1)
 			game->rays[ray]->wallface = 'E';
 		else
-			game->rays[ray]->wallface = 'W';			
+			game->rays[ray]->wallface = 'W';
 	}
 }

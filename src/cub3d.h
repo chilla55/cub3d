@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 14:32:27 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/17 16:46:54 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@
 # define Y_RES 720
 # define PI (double)3.1415926
 
-# define TILE_SIZE	42
-# define POS_SIGN 1;
-# define NEG_SIGN 0;
+# define TILE_SIZE 42
+# define POS_SIGN 1
+# define NEG_SIGN 0
 
-# define MOV_STEP 0.1;
-# define ANGLE_STEP 5.0;
+# define SUB_STEPS 5
+# define MOV_STEP 0.1
+# define ANGLE_STEP 5.0
+
 
 /*
 ** t_ray struct, contains the data for one ray.
@@ -65,6 +67,13 @@ typedef struct s_ray {
 	double	h_pixel;
 }				t_ray;
 
+typedef	struct	s_buff {
+	char	*buffer;
+	int		pixel_bits;
+	int		line_bytes;
+	int		endian;
+}				t_buff;
+
 /*
 ** **map:
 ** 	0 for an empty space,
@@ -90,15 +99,15 @@ typedef struct s_game {
 
 	char	*f_color;
 	char	*c_color;
+	int		f_color_int;
+	int		c_color_int;
 	void	*mlx;
 	void	*mlx_win;
 	char	*image_paths[4];
 	void	*mlx_images[4];
+	t_buff	*textures[4];
 	void	*frame_buffer;
-	char	*buffer;
-	int		pixel_bits;
-	int		line_bytes;
-	int		endian;
+	t_buff	*buffer;
 }				t_game;
 
 // exit.c

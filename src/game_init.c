@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 14:28:18 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/17 23:06:59 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ void	null_init(t_game *game)
 	game->mlx = NULL;
 	game->mlx_win = NULL;
 	game->frame_buffer = NULL;
+	game->buffer = NULL;
 	i = 0;
 	while (i < 4)
 	{
 		game->image_paths[i] = NULL;
 		game->mlx_images[i] = NULL;
+		game->textures[i] = NULL;
 		i++;
 	}
 	i = 0;

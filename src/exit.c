@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:39:05 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 14:35:58 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/17 23:55:52 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 /*
 ** Image sources displayed during regular game exit.
 */
+
+static void	free_buffers(t_game *game);
+static void	free_map(t_game *game);
 
 static void	credits(void)
 {
@@ -51,16 +54,6 @@ static void	exitmessage(int exitmode)
 }
 
 /*
-** Hitting the "X" in the upper right corner of the window runs a normal exit.
-*/
-
-int	exitclick(void *game)
-{
-	game_exit((t_game *)game, 0);
-	return (0);
-}
-
-/*
 ** On exit, all allocated memory is freed and a message displayed.
 */
 
@@ -70,25 +63,8 @@ void	game_exit(t_game *game, int exitmode)
 
 	if (game)
 	{
-		i = 0;
-		while (i < 4)
-		{
-			if (game->image_paths[i])
-				free (game->image_paths[i]);
-			if (game->mlx_images[i])
-				mlx_destroy_image(game->mlx, game->mlx_images[i]);
-			i++;
-		}
-		if (game->f_color)
-			free (game->f_color);
-		if (game->c_color)
-			free (game->c_color);
-		while (game->height)
-		{
-			free (game->map[game->height - 1]);
-			game->height--;
-		}
-		free (game->map);
+		free_buffers(game);
+		free_map(game);
 		i = 0;
 		while (i < X_RES)
 		{
@@ -96,19 +72,57 @@ void	game_exit(t_game *game, int exitmode)
 				free (game->rays[i]);
 			i++;
 		}
-		if (game->frame_buffer)
-			mlx_destroy_image(game->mlx, game->frame_buffer);
-		if (game->mlx_win)
-		{
-			mlx_destroy_window(game->mlx, game->mlx_win);
-		}
-		if (game->mlx)
-		{
-			mlx_destroy_display(game->mlx);
-			free(game->mlx);
-		}
 		free (game);
 	}
 	exitmessage(exitmode);
 	exit (0);
+}
+
+static void	free_buffers(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (game->textures[i])
+			free (game->textures[i]);
+		if (game->image_paths[i])
+			free (game->image_paths[i]);
+		if (game->mlx_images[i])
+			mlx_destroy_image(game->mlx, game->mlx_images[i]);
+		i++;
+	}
+	if (game->buffer)
+		free (game->buffer);
+	if (game->frame_buffer)
+		mlx_destroy_image(game->mlx, game->frame_buffer);
+	if (game->mlx_win)
+		mlx_destroy_window(game->mlx, game->mlx_win);
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
+}
+
+static void	free_map(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	if (game->map)
+	{
+		while (i < game->height)
+		{
+			if (game->map[i])
+				free (game->map[i]);
+			i++;
+		}
+		free (game->map);
+	}
+	if (game->f_color)
+		free (game->f_color);
+	if (game->c_color)
+		free (game->c_color);
 }
