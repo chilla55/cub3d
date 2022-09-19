@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:27:36 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/17 23:59:06 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/19 12:51:38 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	fill_buffer(t_game *game)
 		while (y < Y_RES)
 		{
 			if (y < Y_RES / 2 - game->rays[x]->height)
-				draw_color_pixel(game, game->c_color_int, x, y);
+				draw_color_pixel(game, game->c_color, x, y);
 			else if (y >= Y_RES / 2 - game->rays[x]->height
 				&& y < Y_RES / 2 + game->rays[x]->height)
 			{
@@ -159,7 +159,7 @@ void	fill_buffer(t_game *game)
 					draw_color_pixel(game, color_E, x, y);
 			}
 			else
-				draw_color_pixel(game, game->f_color_int, x, y);
+				draw_color_pixel(game, game->f_color, x, y);
 			y++;
 		}
 		x++;
@@ -207,8 +207,6 @@ void	game_mlx_init(t_game *game)
 		game_exit(game, -2);
 	game->mlx_win = mlx_new_window
 		(game->mlx, X_RES, Y_RES, "Cub3D");
-	game->c_color_int = ft_atoi(game->c_color);
-	game->f_color_int = ft_atoi(game->f_color);
 //	mlx_do_key_autorepeatoff(game->mlx);
 	mlx_expose_hook(game->mlx_win, win_redraw, game);
 	mlx_hook(game->mlx_win, 2, (1L << 0), key_hook, game);
