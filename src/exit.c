@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:39:05 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/17 23:55:52 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/19 12:47:50 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,4 @@ static void	free_map(t_game *game)
 		}
 		free (game->map);
 	}
-	if (game->f_color)
-		free (game->f_color);
-	if (game->c_color)
-		free (game->c_color);
 }

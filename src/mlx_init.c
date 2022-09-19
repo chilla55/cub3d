@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:27:36 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/19 17:24:00 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/19 19:19:27 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	fill_buffer(t_game *game)
 		{
 			if (y < Y_RES / 2 - game->rays[x]->height)
 				draw_pixel(game->buffer, game->c_color_int, x, y);
+				draw_color_pixel(game, game->c_color, x, y);
 			else if (y >= Y_RES / 2 - game->rays[x]->height
 				&& y < Y_RES / 2 + game->rays[x]->height)
 			{
@@ -142,6 +143,8 @@ void	fill_buffer(t_game *game)
 			else
 				draw_pixel(game->buffer, game->f_color_int, x, y);
 			x++;
+				draw_color_pixel(game, game->f_color, x, y);
+			y++;
 		}
 		y++;
 	}
@@ -188,9 +191,7 @@ void	game_mlx_init(t_game *game)
 		game_exit(game, -2);
 	game->mlx_win = mlx_new_window
 		(game->mlx, X_RES, Y_RES, "Cub3D");
-	game->c_color_int = ft_atoi(game->c_color);
-	game->f_color_int = ft_atoi(game->f_color);
-	mlx_do_key_autorepeatoff(game->mlx);
+//	mlx_do_key_autorepeatoff(game->mlx);
 	mlx_expose_hook(game->mlx_win, win_redraw, game);
 	mlx_hook(game->mlx_win, 2, (1L << 0), key_hook, game);
 	mlx_hook(game->mlx_win, 17, (1L << 17), exitclick, game);

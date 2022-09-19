@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/17 23:06:59 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/19 12:46:15 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	get_params(t_game *game, char *path)
 		printf("%s\n", game->image_paths[i]);
 		i++;
 	}
-	printf("%s\n", game->f_color);
-	printf("%s\n", game->c_color);
+	printf("%d\n", game->f_color);
+	printf("%d\n", game->c_color);
 	get_size(game, fd);
 	close (fd);
 	return (a);

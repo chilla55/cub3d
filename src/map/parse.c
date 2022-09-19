@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:42:09 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/09/15 17:58:50 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/09/19 12:53:40 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	parse_option(int fd, t_game *game, int *i)
 	else if (!ft_strncmp(line, "EA ", 3))
 		game->image_paths[3] = ft_substr(line, 3, ft_strlen(line) - 4);
 	else if (!ft_strncmp(line, "F ", 2))
-		game->f_color = ft_substr(line, 2, ft_strlen(line) - 3);
+		game->f_color = encode_rgb(line);
 	else if (!ft_strncmp(line, "C ", 2))
-		game->c_color = ft_substr(line, 2, ft_strlen(line) - 3);
+		game->c_color = encode_rgb(line);
 	else if (line[0] != '\n')
 		return (check_options(game, line));
 	free(line);

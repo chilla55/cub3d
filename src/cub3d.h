@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/19 17:20:33 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/19 19:19:25 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,8 @@ typedef struct s_game {
 	double	angle;
 	t_ray	*rays[X_RES];
 
-	char	*f_color;
-	char	*c_color;
-	int		f_color_int;
-	int		c_color_int;
+	int		f_color;
+	int		c_color;
 	void	*mlx;
 	void	*mlx_win;
 	char	*image_paths[4];
@@ -138,6 +136,12 @@ void	skip_lines(t_game *game, int fd, int lts);
 // map/parse.c
 void	parse_option(int fd, t_game *game, int *i);
 void	parse_map(int fd, t_game *game, int i);
+
+// map/encode_rgb.c
+int		encode_rgb(char *str);
+
+// utils/free_split.c
+void	free_split(char **split);
 
 // raycasting.c
 void	raycaster_init(t_game *game);
