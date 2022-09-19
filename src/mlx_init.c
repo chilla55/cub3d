@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:27:36 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/19 19:19:27 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/19 19:21:01 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,7 @@ void	fill_buffer(t_game *game)
 		while (x < X_RES)
 		{
 			if (y < Y_RES / 2 - game->rays[x]->height)
-				draw_pixel(game->buffer, game->c_color_int, x, y);
-				draw_color_pixel(game, game->c_color, x, y);
+				draw_pixel(game->buffer, game->c_color, x, y);
 			else if (y >= Y_RES / 2 - game->rays[x]->height
 				&& y < Y_RES / 2 + game->rays[x]->height)
 			{
@@ -141,10 +140,8 @@ void	fill_buffer(t_game *game)
 					draw_color_pixel(game, color_E, x, y);*/
  			}
 			else
-				draw_pixel(game->buffer, game->f_color_int, x, y);
+				draw_pixel(game->buffer, game->f_color, x, y);
 			x++;
-				draw_color_pixel(game, game->f_color, x, y);
-			y++;
 		}
 		y++;
 	}
