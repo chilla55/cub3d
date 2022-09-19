@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/17 16:46:54 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/19 17:20:33 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,9 @@ int		key_hook(int key, void *game_void);
 
 int		game_loop(t_game *game);
 void	fill_buffer(t_game *game);
+
+// mlx_lixel_handler.c
+int		extract_pixel(t_buff *buffer, int x, int y);
+void	draw_pixel(t_buff *buffer, int color, int x, int y);
 
 #endif
