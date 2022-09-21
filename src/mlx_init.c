@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:27:36 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/19 19:22:52 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/21 06:55:57 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	get_tex_pixel(t_game *game, int ray, int hor_line)
 	double 	y_frac;
 	int		x;
 
-	y_frac = ((double)hor_line - ((double)Y_RES - (double)game->rays[ray]->height ) / 2) / (double)game->rays[ray]->height ;
+	y_frac = ((double)hor_line - ((double)Y_RES / 2 - (double)game->rays[ray]->height )) / 2 / (double)game->rays[ray]->height ;
 	y = (int)floor((double)TILE_SIZE * y_frac);
 	x = 0;
 	if (game->rays[ray]->wallface == 'N' || game->rays[ray]->wallface == 'S')
@@ -63,13 +63,39 @@ static void	draw_minimap(t_game *game)
 			if (y / 2 == (int)(game->y_pos * 10 / 2)
 				&& x / 2 == (int)(game->x_pos * 10 / 2))
 				draw_pixel(game->buffer, color, x, y);
-			else if (y / 2 == (int)(game->rays[640]->y * 10 / 2)
-				&& x / 2 == (int)(game->rays[640]->x * 10 / 2))
+			else if (y / 2 == (int)(game->rays[(int)(X_RES / 2)]->y * 10 / 2)
+				&& x / 2 == (int)(game->rays[(int)(X_RES / 2)]->x * 10 / 2))
 				draw_pixel(game->buffer, 0xEFCDAB, x, y);
 			else if ((game->map[y / 10][x / 10]) == '1')
 				draw_pixel(game->buffer, color_2, x, y);
 			else
 				draw_pixel(game->buffer, color_3, x, y);
+			y++;
+		}
+		x++;
+	}
+}
+
+void	draw_crosshair(t_game *game)
+{
+	int	x;
+	int		y;
+	int		x_size;
+	double	radius;
+
+	x_size = 40;
+	x = X_RES / 2 - x_size;
+	while (x <= X_RES / 2 + x_size)
+	{
+		y = Y_RES / 2 - x_size;;
+		while (y <= Y_RES / 2 + x_size)
+		{
+			radius = (pow((x - X_RES / 2), 2) + pow((y - Y_RES / 2), 2));
+			if ((int)sqrt(radius) / 2 == (int)(x_size * 0.75) / 2
+				|| (int)sqrt(radius) <=  (int)(x_size * 0.1))
+				draw_pixel(game->buffer, 0xEFCDAB, x, y);
+			else if (x / 2 == (int)(X_RES / 4) || y / 2 == (int)(Y_RES / 4))
+				draw_pixel(game->buffer, 0xFF0000, x, y);
 			y++;
 		}
 		x++;
@@ -126,18 +152,8 @@ void	fill_buffer(t_game *game)
 			else if (y >= Y_RES / 2 - game->rays[x]->height
 				&& y < Y_RES / 2 + game->rays[x]->height)
 			{
-	//			if (game->rays[x]->wallface == 'N')
-	//			{
 					color = get_tex_pixel(game, x, y);
 					draw_pixel(game->buffer, color, x, y);
-	/*			}
-				//	draw_color_pixel(game, color_N + (int)((game->rays[x]->y - floor(game->rays[x]->y)) * 256), x, y);
-				else if (game->rays[x]->wallface == 'S')
-					draw_color_pixel(game, color_S, x, y);
-				else if (game->rays[x]->wallface == 'W')
-					draw_color_pixel(game, color_W, x, y);
-				else
-					draw_color_pixel(game, color_E, x, y);*/
  			}
 			else
 				draw_pixel(game->buffer, game->f_color, x, y);
@@ -146,6 +162,7 @@ void	fill_buffer(t_game *game)
 		y++;
 	}
 	draw_minimap(game);
+	draw_crosshair(game);
 //	copy_texture(game);
 }
 

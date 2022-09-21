@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 23:53:11 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/19 17:06:29 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/21 06:57:48 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	raycasting(t_game *game)
 		game->rays[ray]->x = floor(game->x_pos) + game->rays[ray]->d_x_sign;
 		game->rays[ray]->y = floor(game->y_pos) + game->rays[ray]->d_y_sign;
 		game->rays[ray]->distance = raycast_find_wall(game, ray);
-		game->rays[ray]->height = (int)(Y_RES / 2 / game->rays[ray]->distance / cos(game->rays[ray]->alpha_0));
+		game->rays[ray]->height = (int)(Y_RES / 2.3 / game->rays[ray]->distance / cos(game->rays[ray]->alpha_0));
 		ray++;
 	}
 }
