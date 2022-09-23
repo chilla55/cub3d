@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycaster_init.c                                   :+:      :+:    :+:   */
+/*   raycasting_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 21:46:07 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/16 14:12:51 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/23 10:12:00 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	raycaster_cal_default_angles(t_game *game);
 
 /*
-	X_RES rays, equally??? spaced between angle-45 to angle+45 - No, not equally...
-	each needs distance to wall, type of wall face (NSWE),
+	X_RES rays, spaced between angle-45 to angle+45 - not equally...
+	Each needs distance to wall, type of wall face (NSWE),
 	and point on wall (between 0 and 1 to extract from texture)
 */
 

@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/23 10:03:32 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/23 10:13:01 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # define MOV_STEP 0.1
 # define ANGLE_STEP 5.0
 
-
 /*
 ** t_ray struct, contains the data for one ray.
 ** It will be used to draw one vertical pixel line.
@@ -67,7 +66,7 @@ typedef struct s_ray {
 	double	h_pixel;
 }				t_ray;
 
-typedef	struct	s_buff {
+typedef struct s_buff {
 	char	*buffer;
 	int		pixel_bits;
 	int		line_bytes;
