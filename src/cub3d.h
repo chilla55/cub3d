@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/19 19:19:25 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/23 10:03:32 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,14 @@ int		encode_rgb(char *str);
 // utils/free_split.c
 void	free_split(char **split);
 
-// raycasting.c
+// raycasting_init.c
 void	raycaster_init(t_game *game);
+
+// raycasting.c
 void	raycasting(t_game *game);
+
+// raycasting_find_wall.c
+void	ray_find_wall(t_game *game, int ray);
 
 // angle_helpers.c
 double	cal_degree(double radian);
