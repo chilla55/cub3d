@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycaster_find_wall.c                              :+:      :+:    :+:   */
+/*   raycasting_find_wall.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 08:43:38 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/23 09:57:02 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/23 18:04:51 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ static void	ray_set_wall(t_game *game, int ray, char c)
 	if (c == 'x')
 	{
 		if (game->rays[ray]->d_x_sign == 1)
-			game->rays[ray]->wallface = 'S';
+			game->rays[ray]->wallface = 'E';
 		else
-			game->rays[ray]->wallface = 'N';
+			game->rays[ray]->wallface = 'W';
 		game->rays[ray]->y = game->y_pos
 			- game->rays[ray]->d_x * cos (game->rays[ray]->alpha);
 		game->rays[ray]->distance = game->rays[ray]->d_x;
@@ -98,9 +98,9 @@ static void	ray_set_wall(t_game *game, int ray, char c)
 	else
 	{
 		if (game->rays[ray]->d_y_sign == 1)
-			game->rays[ray]->wallface = 'E';
+			game->rays[ray]->wallface = 'S';
 		else
-			game->rays[ray]->wallface = 'W';
+			game->rays[ray]->wallface = 'N';
 		game->rays[ray]->x = game->x_pos
 			+ game->rays[ray]->d_y * sin (game->rays[ray]->alpha);
 		game->rays[ray]->distance = game->rays[ray]->d_y;

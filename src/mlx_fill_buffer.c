@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 10:53:57 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/23 10:56:27 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/23 18:25:13 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,26 +101,26 @@ static void	draw_crosshair(t_game *game)
 static int	get_tex_pixel(t_game *game, int ray, int hor_line)
 {
 	int		y;
-	double	y_frac;
 	int		x;
+	double	y_frac;
+	double	x_frac;
 
 	y_frac = ((double)hor_line - ((double)Y_RES / 2
 				- (double)game->rays[ray]->height)) / 2
 		/ (double)game->rays[ray]->height;
-	y = (int)floor((double)TILE_SIZE * y_frac);
-	x = 0;
-	if (game->rays[ray]->wallface == 'N'
-		|| game->rays[ray]->wallface == 'S')
-		x = (int)((double)TILE_SIZE
-				* (game->rays[ray]->y - floor(game->rays[ray]->y)));
+	y = (int)floor(((double)TILE_SIZE) * y_frac);
+	if (game->rays[ray]->wallface == 'E')
+		x_frac = (game->rays[ray]->y - floor(game->rays[ray]->y));
+	else if (game->rays[ray]->wallface == 'W')
+		x_frac = (ceil(game->rays[ray]->y) - game->rays[ray]->y);
+	else if (game->rays[ray]->wallface == 'N')
+		x_frac = (game->rays[ray]->x - floor(game->rays[ray]->x));
 	else
-		x = (int)((double)TILE_SIZE
-				* (game->rays[ray]->x - floor(game->rays[ray]->x)));
+		x_frac = (ceil(game->rays[ray]->x) - game->rays[ray]->x);
+	x = (int)(((double)(TILE_SIZE)) * x_frac);
 	if (0 <= y && y < TILE_SIZE)
-	{
 		return (extract_pixel(game->textures
 				[get_wallface_index(game->rays[ray]->wallface)], x, y));
-	}
 	return (0);
 }
 
@@ -128,9 +128,9 @@ static int	get_wallface_index(char wallface)
 {
 	if (wallface == 'N')
 		return (0);
-	if (wallface == 'E')
+	if (wallface == 'S')
 		return (1);
-	if (wallface == 'N')
+	if (wallface == 'W')
 		return (2);
 	return (3);
 }

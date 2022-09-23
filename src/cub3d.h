@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/23 10:13:01 by skorte           ###   ########.fr       */
+/*   Updated: 2022/09/23 17:56:07 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define Y_RES 720
 # define PI (double)3.1415926
 
-# define TILE_SIZE 42
+# define TILE_SIZE 128
 # define POS_SIGN 1
 # define NEG_SIGN 0
 
