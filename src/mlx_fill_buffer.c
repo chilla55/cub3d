@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_fill_buffer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 10:53:57 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/23 18:25:13 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/12 16:55:22 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	draw_minimap(t_game *game);
-static void	draw_crosshair(t_game *game);
-static int	get_tex_pixel(t_game *game, int x, int y);
-static int	get_wallface_index(char wallface);
+static void		draw_minimap(t_game *game);
+static void		draw_crosshair(t_game *game);
+static t_color	get_tex_pixel(t_game *game, int x, int y);
+static int		get_wallface_index(char wallface);
 
 void	fill_buffer(t_game *game)
 {
@@ -45,9 +45,9 @@ void	fill_buffer(t_game *game)
 
 static void	draw_minimap(t_game *game)
 {
-	int	x;
-	int	y;
-	int	color;
+	int		x;
+	int		y;
+	t_color	color;
 
 	x = 0;
 	while (x < game->width * 10)
@@ -57,14 +57,14 @@ static void	draw_minimap(t_game *game)
 		{
 			if (y / 2 == (int)(game->y_pos * 10 / 2)
 				&& x / 2 == (int)(game->x_pos * 10 / 2))
-				color = 0x0BCDEF;
+				color = getcolor(0, 11, 205, 239);
 			else if (y / 2 == (int)(game->rays[(int)(X_RES / 2)]->y * 10 / 2)
 				&& x / 2 == (int)(game->rays[(int)(X_RES / 2)]->x * 10 / 2))
-				color = 0xEFCDAB;
+				color = getcolor(0, 239, 205, 171);
 			else if ((game->map[y / 10][x / 10]) == '1')
-				color = 0x123456;
+				color = getcolor(0, 18, 52, 86);
 			else
-				color = 0x456789;
+				color = getcolor(0, 69, 103, 137);
 			draw_pixel(game->buffer, color, x, y);
 			y++;
 		}
@@ -89,16 +89,16 @@ static void	draw_crosshair(t_game *game)
 			radius = (pow((x - X_RES / 2), 2) + pow((y - Y_RES / 2), 2));
 			if ((int)sqrt(radius) / 2 == (int)(x_size * 0.75) / 2
 				|| (int)sqrt(radius) <= (int)(x_size * 0.1))
-				draw_pixel(game->buffer, 0xEFCDAB, x, y);
+				draw_pixel(game->buffer, getcolor(0, 239, 205, 171), x, y);
 			else if (x / 2 == (int)(X_RES / 4) || y / 2 == (int)(Y_RES / 4))
-				draw_pixel(game->buffer, 0xFF0000, x, y);
+				draw_pixel(game->buffer, getcolor(0, 255, 0, 0), x, y);
 			y++;
 		}
 		x++;
 	}
 }
 
-static int	get_tex_pixel(t_game *game, int ray, int hor_line)
+static t_color	get_tex_pixel(t_game *game, int ray, int hor_line)
 {
 	int		y;
 	int		x;
@@ -121,7 +121,7 @@ static int	get_tex_pixel(t_game *game, int ray, int hor_line)
 	if (0 <= y && y < TILE_SIZE)
 		return (extract_pixel(game->textures
 				[get_wallface_index(game->rays[ray]->wallface)], x, y));
-	return (0);
+	return (getcolor(0, 0, 0, 0));
 }
 
 static int	get_wallface_index(char wallface)

@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:42:09 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/09/19 12:53:40 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:31:06 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	check_options(t_game *game, char *line)
 {
 	free(line);
 	if (!game->image_paths[0] || !game->image_paths[1] || !game->image_paths[2]
-		|| !game->image_paths[3] || !game->f_color || !game->c_color)
+		|| !game->image_paths[3] || (!game->f_color.a && !game->f_color.r
+			&& !game->f_color.g && !game->f_color.b) || (!game->c_color.a
+			&&!game->c_color.r && !game->c_color.g && !game->c_color.b))
 		game_exit(game, -1);
 }
 

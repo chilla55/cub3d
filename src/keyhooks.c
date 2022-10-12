@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyhooks.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:21:52 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/17 23:55:22 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/12 16:02:44 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	key_hook(int key, void *game_void)
 	int		i;
 
 	game = ((t_game *)game_void);
-	if (key == 65307)
+	if (key == KEY_CODE_ESC)
 		game_exit (game, 65307);
 	i = 0;
 	while (i < SUB_STEPS)
@@ -73,13 +73,13 @@ static int	move_pos(t_game *game, int key)
 
 	step_size = MOV_STEP;
 	step_size /= SUB_STEPS;
-	if (key == 'w')
+	if (key == KEY_CODE_W)
 		direction = 270;
-	else if (key == 'a')
+	else if (key == KEY_CODE_A)
 		direction = 180;
-	else if (key == 's')
+	else if (key == KEY_CODE_S)
 		direction = 90;
-	else if (key == 'd')
+	else if (key == KEY_CODE_D)
 		direction = 0;
 	else
 		return (0);
@@ -136,9 +136,9 @@ static int	rot_pos(t_game *game, int key)
 
 	step_size = ANGLE_STEP;
 	step_size /= SUB_STEPS;
-	if (key == 65363)
+	if (key == KEY_CODE_RIGHT)
 		game->angle += step_size;
-	else if (key == 65361)
+	else if (key == KEY_CODE_LEFT)
 		game->angle -= step_size;
 	else
 		return (0);

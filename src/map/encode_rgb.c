@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 12:33:03 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/09/19 12:53:19 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:45:51 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,28 @@ int	checkvalid(int *i)
 	return (0);
 }
 
+t_color	getcolor(int a, int r, int g, int b)
+{
+	t_color	c;
+
+	c.a = a;
+	c.r = r;
+	c.g = g;
+	c.b = b;
+	return (c);
+}
+
 /*
 ** Parser for textures and colors
 */
 
-int	encode_rgb(char *str)
+t_color	encode_rgb(char *str)
 {
-	int		color;
+	t_color	color;
 	int		tempi[3];
 	char	**temp;
 
-	str = ft_substr(str, 2, ft_strlen(str) - 3);
+	str = ft_substr(str, 2, ft_strlen(str) - 2);
 	temp = ft_split(str, ',');
 	tempi[0] = ft_atoi(temp[0]);
 	tempi[1] = ft_atoi(temp[1]);
@@ -38,7 +49,10 @@ int	encode_rgb(char *str)
 	free(str);
 	free_split(temp);
 	if (!checkvalid(tempi))
-		return (0);
-	color = (tempi[0] << 16 | tempi[1] << 8 | tempi[2]);
+		return (getcolor(0, 0, 0, 0));
+	color.a = 0;
+	color.r = tempi[0];
+	color.g = tempi[1];
+	color.b = tempi[2];
 	return (color);
 }

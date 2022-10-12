@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:39:05 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/19 12:47:50 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:14:12 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 ** Image sources displayed during regular game exit.
 */
 
-static void	free_buffers(t_game *game);
 static void	free_map(t_game *game);
 
 static void	credits(void)
@@ -76,34 +75,6 @@ void	game_exit(t_game *game, int exitmode)
 	}
 	exitmessage(exitmode);
 	exit (0);
-}
-
-static void	free_buffers(t_game *game)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		if (game->textures[i])
-			free (game->textures[i]);
-		if (game->image_paths[i])
-			free (game->image_paths[i]);
-		if (game->mlx_images[i])
-			mlx_destroy_image(game->mlx, game->mlx_images[i]);
-		i++;
-	}
-	if (game->buffer)
-		free (game->buffer);
-	if (game->frame_buffer)
-		mlx_destroy_image(game->mlx, game->frame_buffer);
-	if (game->mlx_win)
-		mlx_destroy_window(game->mlx, game->mlx_win);
-	if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
 }
 
 static void	free_map(t_game *game)

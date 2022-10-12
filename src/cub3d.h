@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/23 17:56:07 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/12 18:14:56 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <math.h>
 # include <stdio.h> //remove??
 # include "../lib/libft/libft.h"
-# include "../lib/minilibx-linux/mlx.h"
+# include "../lib/mlx/mlx.h"
 
 /*
 ** unistd for write
@@ -39,6 +39,24 @@
 # define SUB_STEPS 5
 # define MOV_STEP 0.1
 # define ANGLE_STEP 5.0
+
+# ifdef __APPLE__
+#  define KEY_CODE_W 13
+#  define KEY_CODE_A 0
+#  define KEY_CODE_S 1
+#  define KEY_CODE_D 2
+#  define KEY_CODE_ESC 53
+#  define KEY_CODE_LEFT 123
+#  define KEY_CODE_RIGHT 124
+# else
+#  define KEY_CODE_W 119
+#  define KEY_CODE_A 97
+#  define KEY_CODE_S 115
+#  define KEY_CODE_D 100
+#  define KEY_CODE_ESC 65307
+#  define KEY_CODE_LEFT 65361
+#  define KEY_CODE_RIGHT 65363
+# endif
 
 /*
 ** t_ray struct, contains the data for one ray.
@@ -73,6 +91,14 @@ typedef struct s_buff {
 	int		endian;
 }				t_buff;
 
+typedef struct s_color
+{
+	unsigned char	b;
+	unsigned char	g;
+	unsigned char	r;
+	unsigned char	a;
+}	t_color;
+
 /*
 ** **map:
 ** 	0 for an empty space,
@@ -96,8 +122,8 @@ typedef struct s_game {
 	double	angle;
 	t_ray	*rays[X_RES];
 
-	int		f_color;
-	int		c_color;
+	t_color	f_color;
+	t_color	c_color;
 	void	*mlx;
 	void	*mlx_win;
 	char	*image_paths[4];
@@ -110,6 +136,9 @@ typedef struct s_game {
 // exit.c
 int		exitclick(void *game);
 void	game_exit(t_game *game, int exitmode);
+
+// exit_mac.c & exit_linux.c
+void	free_buffers(t_game *game);
 
 // mlx_init.c
 void	game_mlx_init(t_game *game);
@@ -137,7 +166,8 @@ void	parse_option(int fd, t_game *game, int *i);
 void	parse_map(int fd, t_game *game, int i);
 
 // map/encode_rgb.c
-int		encode_rgb(char *str);
+t_color	getcolor(int a, int r, int g, int b);
+t_color	encode_rgb(char *str);
 
 // utils/free_split.c
 void	free_split(char **split);
@@ -162,7 +192,7 @@ int		game_loop(t_game *game);
 void	fill_buffer(t_game *game);
 
 // mlx_lixel_handler.c
-int		extract_pixel(t_buff *buffer, int x, int y);
-void	draw_pixel(t_buff *buffer, int color, int x, int y);
+t_color	extract_pixel(t_buff *buffer, int x, int y);
+void	draw_pixel(t_buff *buffer, t_color color, int x, int y);
 
 #endif

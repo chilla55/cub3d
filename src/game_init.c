@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/19 12:46:15 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:40:52 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,10 @@ int	get_params(t_game *game, char *path)
 		printf("%s\n", game->image_paths[i]);
 		i++;
 	}
-	printf("%d\n", game->f_color);
-	printf("%d\n", game->c_color);
+	printf("%d,%d,%d,%d\n", game->f_color.a, game->f_color.r,
+		game->f_color.g, game->f_color.b);
+	printf("%d,%d,%d,%d\n", game->c_color.a, game->c_color.r,
+		game->c_color.g, game->c_color.b);
 	get_size(game, fd);
 	close (fd);
 	return (a);
