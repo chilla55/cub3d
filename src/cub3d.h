@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/12 18:14:56 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:07:05 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@
 # define Y_RES 720
 # define PI (double)3.1415926
 
-# define TILE_SIZE 128
 # define POS_SIGN 1
 # define NEG_SIGN 0
 
-# define SUB_STEPS 5
+# define SUB_STEPS 1
 # define MOV_STEP 0.1
 # define ANGLE_STEP 5.0
 
@@ -88,6 +87,8 @@ typedef struct s_buff {
 	char	*buffer;
 	int		pixel_bits;
 	int		line_bytes;
+	int		x_size;
+	int		y_size;
 	int		endian;
 }				t_buff;
 

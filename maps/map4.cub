@@ -1,0 +1,15 @@
+NO ./img/Wolf_N.xpm
+SO ./img/Wolf_S.xpm
+WE ./img/Wolf_W.xpm
+EA ./img/Wolf_E.xpm
+
+
+
+F 0,100,0
+C 100,100,252
+
+111111
+100011
+10N011
+100001
+111111

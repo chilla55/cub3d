@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_pixel_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:15:08 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/12 11:51:52 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:21:41 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

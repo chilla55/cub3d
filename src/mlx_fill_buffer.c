@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_fill_buffer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 10:53:57 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/12 16:55:22 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:49:30 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	fill_buffer(t_game *game)
 		}
 		y++;
 	}
-	draw_minimap(game);
-	draw_crosshair(game);
+//	draw_minimap(game);
+//	draw_crosshair(game);
 }
 
 static void	draw_minimap(t_game *game)
@@ -104,11 +104,13 @@ static t_color	get_tex_pixel(t_game *game, int ray, int hor_line)
 	int		x;
 	double	y_frac;
 	double	x_frac;
+	int		i;
 
+	i = get_wallface_index(game->rays[ray]->wallface);
 	y_frac = ((double)hor_line - ((double)Y_RES / 2
 				- (double)game->rays[ray]->height)) / 2
 		/ (double)game->rays[ray]->height;
-	y = (int)floor(((double)TILE_SIZE) * y_frac);
+	y = (int)floor(((double)(game->textures[i]->y_size)) * y_frac);
 	if (game->rays[ray]->wallface == 'E')
 		x_frac = (game->rays[ray]->y - floor(game->rays[ray]->y));
 	else if (game->rays[ray]->wallface == 'W')
@@ -117,10 +119,9 @@ static t_color	get_tex_pixel(t_game *game, int ray, int hor_line)
 		x_frac = (game->rays[ray]->x - floor(game->rays[ray]->x));
 	else
 		x_frac = (ceil(game->rays[ray]->x) - game->rays[ray]->x);
-	x = (int)(((double)(TILE_SIZE)) * x_frac);
-	if (0 <= y && y < TILE_SIZE)
-		return (extract_pixel(game->textures
-				[get_wallface_index(game->rays[ray]->wallface)], x, y));
+	x = (int)((double)game->textures[i]->x_size * x_frac);
+	if (0 <= y && y < game->textures[i]->y_size)
+		return (extract_pixel(game->textures[i], x, y));
 	return (getcolor(0, 0, 0, 0));
 }
 
