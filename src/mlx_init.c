@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:27:36 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/23 10:59:37 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/13 16:45:50 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	win_redraw(void *game_void)
 
 static void	buffer_init(t_game *game)
 {
+	mlx_destroy_image(game->mlx, game->frame_buffer);
+	game->frame_buffer = mlx_new_image(game->mlx, X_RES, Y_RES);
 	game->buffer = malloc(sizeof(t_buff));
 	if (!game->buffer)
 		game_exit(game, -4);
@@ -52,7 +54,8 @@ void	game_mlx_init(t_game *game)
 	game->mlx_win = mlx_new_window
 		(game->mlx, X_RES, Y_RES, "Cub3D");
 	load_start_screen(game);
-	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame_buffer, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->mlx_win,
+		game->frame_buffer, X_RES / 2 - 640, Y_RES / 2 - 360);
 	mlx_do_key_autorepeaton(game->mlx);
 	mlx_expose_hook(game->mlx_win, win_redraw, game);
 	mlx_hook(game->mlx_win, 2, (1L << 0), key_hook, game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:39:05 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/12 18:14:12 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:48:35 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@
 */
 
 static void	free_map(t_game *game);
-
-static void	credits(void)
-{
-	int	fd;
-
-	fd = STDOUT_FILENO;
-	write(fd, &"\nGraphics credits:\n", 19);
-	write(fd, &" Start screen: Walt Disney's Jungle Book (1967)\n", 48);
-}
 
 /*
 ** Exit messages displayed during game exit.
@@ -48,8 +39,6 @@ static void	exitmessage(int exitmode)
 		write (STDERR_FILENO, "\nError:\n Wall texture not found!\n", 33);
 	else if (exitmode < 0)
 		write (STDERR_FILENO, "\nError:\n error??\n", 17);
-	if (exitmode == 0 || exitmode == 65307)
-		credits();
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 10:53:57 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/13 15:49:30 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/13 16:28:56 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	fill_buffer(t_game *game)
 		}
 		y++;
 	}
-//	draw_minimap(game);
-//	draw_crosshair(game);
+	draw_minimap(game);
+	draw_crosshair(game);
 }
 
 static void	draw_minimap(t_game *game)

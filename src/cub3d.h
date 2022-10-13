@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/13 16:07:05 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/13 16:47:08 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <math.h>
-# include <stdio.h> //remove??
+# include <stdio.h>
 # include "../lib/libft/libft.h"
 # include "../lib/mlx/mlx.h"
 
