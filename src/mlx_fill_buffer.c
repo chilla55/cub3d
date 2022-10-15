@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 10:53:57 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/13 16:28:56 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/15 11:52:03 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static void	draw_minimap(t_game *game)
 	t_color	color;
 
 	x = 0;
-	while (x < game->width * 10)
+	while (x < game->width * 10 && x < X_RES)
 	{
 		y = 0;
-		while (y < game->height * 10)
+		while (y < game->height * 10 && y < Y_RES)
 		{
 			if (y / 2 == (int)(game->y_pos * 10 / 2)
 				&& x / 2 == (int)(game->x_pos * 10 / 2))
