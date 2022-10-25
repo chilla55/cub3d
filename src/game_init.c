@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/25 13:34:20 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:51:34 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,8 @@ t_game	*game_init(char *path)
 	parse_map(fd, game, i);
 	printf("Player position: %f, %f, angle %f\n",
 		game->x_pos, game->y_pos, game->angle);
+	game->scale = X_RES / 5.0 / game->width;
+	if (Y_RES / 5.0 / game->height < game->scale)
+		game->scale = Y_RES / 5.0 / game->height;
 	return (game);
 }

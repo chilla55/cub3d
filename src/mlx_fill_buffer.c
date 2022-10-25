@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 10:53:57 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/15 11:52:03 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/25 18:27:28 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,25 @@ static void	draw_minimap(t_game *game)
 {
 	int		x;
 	int		y;
-	t_color	color;
+	char	c;
 
 	x = 0;
-	while (x < game->width * 10 && x < X_RES)
+	while (x < game->width * game->scale)
 	{
 		y = 0;
-		while (y < game->height * 10 && y < Y_RES)
+		while (y < game->height * game->scale)
 		{
-			if (y / 2 == (int)(game->y_pos * 10 / 2)
-				&& x / 2 == (int)(game->x_pos * 10 / 2))
-				color = getcolor(0, 11, 205, 239);
-			else if (y / 2 == (int)(game->rays[(int)(X_RES / 2)]->y * 10 / 2)
-				&& x / 2 == (int)(game->rays[(int)(X_RES / 2)]->x * 10 / 2))
-				color = getcolor(0, 239, 205, 171);
-			else if ((game->map[y / 10][x / 10]) == '1')
-				color = getcolor(0, 18, 52, 86);
-			else
-				color = getcolor(0, 69, 103, 137);
-			draw_pixel(game->buffer, color, x, y);
+			c = (game->map[(int)(y / game->scale)][(int)(x / game->scale)]);
+			if (y / 2 == (int)(game->y_pos * game->scale / 2)
+				&& x / 2 == (int)(game->x_pos * game->scale / 2))
+				draw_pixel(game->buffer, getcolor(0, 11, 205, 239), x, y);
+			else if (y / 2 == (int)(game->rays[X_RES / 2]->y * game->scale / 2)
+				&& x / 2 == (int)(game->rays[X_RES / 2]->x * game->scale / 2))
+				draw_pixel(game->buffer, getcolor(0, 239, 205, 171), x, y);
+			else if (c == '1')
+				draw_pixel(game->buffer, getcolor(0, 18, 52, 86), x, y);
+			else if (c != ' ')
+				draw_pixel(game->buffer, getcolor(0, 69, 103, 137), x, y);
 			y++;
 		}
 		x++;
