@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/13 16:47:08 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/15 19:06:46 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ typedef struct s_buff {
 
 typedef struct s_color
 {
-	unsigned char	b;
-	unsigned char	g;
-	unsigned char	r;
-	unsigned char	a;
+	char	b;
+	char	g;
+	char	r;
+	char	a;
 }	t_color;
 
 /*
@@ -156,14 +156,14 @@ void	set_player_pos(t_game *game, int x, int y);
 void	map_test(t_game *game);
 
 // load_cub_1.c
-void	get_size(t_game *game, int fd);
+void	get_size(t_game *game, int fd, char *line);
 
 // load_cub_2.c
 void	skip_empty_line(t_game *game, int fd);
 void	skip_lines(t_game *game, int fd, int lts);
 
 // map/parse.c
-void	parse_option(int fd, t_game *game, int *i);
+void	parse_option(int fd, t_game *game, int *i, char **line);
 void	parse_map(int fd, t_game *game, int i);
 
 // map/encode_rgb.c

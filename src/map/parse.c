@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:42:09 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/10/12 11:31:06 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:36:26 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,49 @@
 ** Check if all textures and colors are defined
 */
 
-void	check_options(t_game *game, char *line)
+void	check_options(t_game *game, char **line)
 {
-	free(line);
 	if (!game->image_paths[0] || !game->image_paths[1] || !game->image_paths[2]
 		|| !game->image_paths[3] || (!game->f_color.a && !game->f_color.r
 			&& !game->f_color.g && !game->f_color.b) || (!game->c_color.a
 			&&!game->c_color.r && !game->c_color.g && !game->c_color.b))
+	{
+		free(*line);
+		free(line);
 		game_exit(game, -1);
+	}
 }
 
 /*
 ** Parser for textures and colors
 */
 
-void	parse_option(int fd, t_game *game, int *i)
+void	parse_option(int fd, t_game *game, int *i, char **line)
 {
-	char	*line;
-
-	line = get_next_line(fd);
-	if (!line)
+	*line = get_next_line(fd);
+	if (!*line)
+	{
+		free(line);
 		game_exit(game, -1);
-	printf("%s", line);
-	if (!ft_strncmp(line, "NO ", 3))
-		game->image_paths[0] = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (!ft_strncmp(line, "SO ", 3))
-		game->image_paths[1] = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (!ft_strncmp(line, "WE ", 3))
-		game->image_paths[2] = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (!ft_strncmp(line, "EA ", 3))
-		game->image_paths[3] = ft_substr(line, 3, ft_strlen(line) - 4);
-	else if (!ft_strncmp(line, "F ", 2))
-		game->f_color = encode_rgb(line);
-	else if (!ft_strncmp(line, "C ", 2))
-		game->c_color = encode_rgb(line);
-	else if (line[0] != '\n')
+	}
+	printf("%s", *line);
+	if (!ft_strncmp(*line, "NO ", 3))
+		game->image_paths[0] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	else if (!ft_strncmp(*line, "SO ", 3))
+		game->image_paths[1] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	else if (!ft_strncmp(*line, "WE ", 3))
+		game->image_paths[2] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	else if (!ft_strncmp(*line, "EA ", 3))
+		game->image_paths[3] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	else if (!ft_strncmp(*line, "F ", 2))
+		game->f_color = encode_rgb(*line);
+	else if (!ft_strncmp(*line, "C ", 2))
+		game->c_color = encode_rgb(*line);
+	else if (*line[0] != '\n')
 		return (check_options(game, line));
-	free(line);
+	free(*line);
 	(*i)++;
-	parse_option(fd, game, i);
+	parse_option(fd, game, i, line);
 }
 
 void	mapstrcpy(t_game *game, int a)
@@ -92,4 +96,5 @@ void	parse_map(int fd, t_game *game, int i)
 		i++;
 	}
 	map_test(game);
+	printf("Map ok.\n");
 }

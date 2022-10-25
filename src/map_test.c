@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 19:47:07 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/23 10:30:30 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/25 13:35:55 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	map_test(t_game *game)
 		j = 0;
 		while (j < (int)ft_strlen(game->map[i]))
 		{
-			if (!ft_strchr("10NWSE \n\0", game->map[i][j]))
+			if (!ft_strchr("10NWSE \n\0", game->map[i][j])
+				|| (i == 0 && !ft_strchr("1 \0", game->map[i][j])))
 				game_exit(game, -1);
 			if (ft_strchr("0NWSE", game->map[i][j]))
 				check_surrounding(game, i, j);
@@ -47,7 +48,6 @@ void	map_test(t_game *game)
 	}
 	if (p != 1)
 		game_exit(game, -1);
-	printf("Map ok.\n");
 }
 
 static void	check_surrounding(t_game *game, int i, int j)
@@ -57,6 +57,10 @@ static void	check_surrounding(t_game *game, int i, int j)
 		game_exit(game, -1);
 	if (ft_strchr(" \n", game->map[i + 1][j]) ||
 		ft_strchr(" \n", game->map[i - 1][j]) ||
+		ft_strchr(" \n", game->map[i + 1][j + 1]) ||
+		ft_strchr(" \n", game->map[i - 1][j - 1]) ||
+		ft_strchr(" \n", game->map[i - 1][j + 1]) ||
+		ft_strchr(" \n", game->map[i + 1][j - 1]) ||
 		ft_strchr(" \n", game->map[i][j + 1]) ||
 		ft_strchr(" \n", game->map[i][j - 1]))
 		game_exit(game, -1);

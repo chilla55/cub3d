@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/12 16:40:52 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:34:20 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ int	open_cub(t_game *game, char *path)
 
 int	get_params(t_game *game, char *path)
 {
-	int	fd;
-	int	i;
-	int	a;
+	int		fd;
+	int		i;
+	int		a;
+	char	*line;
 
 	a = 0;
 	fd = open_cub(game, path);
-	parse_option(fd, game, &a);
+	parse_option(fd, game, &a, &line);
 	printf("%d", a);
 	i = 0;
 	while (i < 4)
@@ -93,12 +94,14 @@ int	get_params(t_game *game, char *path)
 		printf("%s\n", game->image_paths[i]);
 		i++;
 	}
+	get_size(game, fd, line);
+	close (fd);
+	if (game->c_color.a == -1 || game->f_color.a == -1)
+		game_exit(game, -5);
 	printf("%d,%d,%d,%d\n", game->f_color.a, game->f_color.r,
 		game->f_color.g, game->f_color.b);
 	printf("%d,%d,%d,%d\n", game->c_color.a, game->c_color.r,
 		game->c_color.g, game->c_color.b);
-	get_size(game, fd);
-	close (fd);
 	return (a);
 }
 

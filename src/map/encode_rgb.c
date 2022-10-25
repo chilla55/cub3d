@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 12:33:03 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/10/12 11:45:51 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:13:40 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	checkvalid(int *i)
 {
-	if ((i[0] <= 255 && i[0] >= 0) || (i[1] <= 255 && i[1] >= 0)
-		|| (i[2] <= 255 && i[2] >= 0))
+	if ((i[0] <= 255 && i[0] >= 0) && (i[1] <= 255 && i[1] >= 0)
+		&& (i[2] <= 255 && i[2] >= 0))
 		return (1);
 	return (0);
 }
@@ -40,16 +40,17 @@ t_color	encode_rgb(char *str)
 	t_color	color;
 	int		tempi[3];
 	char	**temp;
+	char	*temps;
 
-	str = ft_substr(str, 2, ft_strlen(str) - 2);
-	temp = ft_split(str, ',');
+	temps = ft_substr(str, 2, ft_strlen(str) - 2);
+	temp = ft_split(temps, ',');
 	tempi[0] = ft_atoi(temp[0]);
 	tempi[1] = ft_atoi(temp[1]);
 	tempi[2] = ft_atoi(temp[2]);
-	free(str);
+	free(temps);
 	free_split(temp);
 	if (!checkvalid(tempi))
-		return (getcolor(0, 0, 0, 0));
+		return (getcolor(-1, -1, -1, -1));
 	color.a = 0;
 	color.r = tempi[0];
 	color.g = tempi[1];

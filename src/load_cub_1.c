@@ -6,19 +6,16 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:07:21 by skorte            #+#    #+#             */
-/*   Updated: 2022/09/14 12:20:25 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:37:32 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	get_size(t_game *game, int fd)
+void	get_size(t_game *game, int fd, char *line)
 {
-	char	*line;
-
-	game->height = 1;
+	game->height = 0;
 	game->width = 0;
-	line = get_next_line(fd);
 	while (line)
 	{
 		game->height++;
