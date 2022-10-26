@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:42:09 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/10/25 13:36:26 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:34:56 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 
 void	check_options(t_game *game, char **line)
 {
-	if (!game->image_paths[0] || !game->image_paths[1] || !game->image_paths[2]
-		|| !game->image_paths[3] || (!game->f_color.a && !game->f_color.r
-			&& !game->f_color.g && !game->f_color.b) || (!game->c_color.a
-			&&!game->c_color.r && !game->c_color.g && !game->c_color.b))
+	if (!game->image_paths[0] || !game->image_paths[1]
+		|| !game->image_paths[2] || !game->image_paths[3])
 	{
 		free(*line);
-		free(line);
+//		free(line);
 		game_exit(game, -1);
 	}
 }
@@ -43,13 +41,25 @@ void	parse_option(int fd, t_game *game, int *i, char **line)
 	}
 	printf("%s", *line);
 	if (!ft_strncmp(*line, "NO ", 3))
-		game->image_paths[0] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	{
+		if (game->image_paths[0] == NULL)
+			game->image_paths[0] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	}
 	else if (!ft_strncmp(*line, "SO ", 3))
-		game->image_paths[1] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	{
+		if (game->image_paths[1] == NULL)
+			game->image_paths[1] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	}
 	else if (!ft_strncmp(*line, "WE ", 3))
-		game->image_paths[2] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	{
+		if (game->image_paths[2] == NULL)
+			game->image_paths[2] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	}
 	else if (!ft_strncmp(*line, "EA ", 3))
-		game->image_paths[3] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	{
+		if (game->image_paths[3] == NULL)
+			game->image_paths[3] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+	}
 	else if (!ft_strncmp(*line, "F ", 2))
 		game->f_color = encode_rgb(*line);
 	else if (!ft_strncmp(*line, "C ", 2))
