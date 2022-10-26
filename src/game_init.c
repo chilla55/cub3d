@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/25 21:12:19 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/26 10:48:47 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	null_init(t_game *game)
 		game->rays[i] = NULL;
 		i++;
 	}
+	game->c_color = getcolor(-1, -1, -1, -1);
+	game->f_color = getcolor(-1, -1, -1, -1);
 }
 
 void	set_player_pos(t_game *game, int x, int y)
