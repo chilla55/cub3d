@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   encode_rgb.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 12:33:03 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/10/15 19:13:40 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:51:07 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,28 @@ t_color	getcolor(int a, int r, int g, int b)
 
 t_color	encode_rgb(char *str)
 {
-	t_color	color;
 	int		tempi[3];
 	char	**temp;
 	char	*temps;
 
 	temps = ft_substr(str, 2, ft_strlen(str) - 2);
 	temp = ft_split(temps, ',');
-	tempi[0] = ft_atoi(temp[0]);
-	tempi[1] = ft_atoi(temp[1]);
-	tempi[2] = ft_atoi(temp[2]);
+	tempi[0] = -1;
+	tempi[1] = -1;
+	tempi[2] = -1;
+	if (temp[0] != NULL)
+	{
+		tempi[0] = ft_atoi(temp[0]);
+		if (temp[1] != NULL)
+		{	
+			tempi[1] = ft_atoi(temp[1]);
+			if (temp[2] != NULL)
+				tempi[2] = ft_atoi(temp[2]);
+		}
+	}
 	free(temps);
 	free_split(temp);
 	if (!checkvalid(tempi))
 		return (getcolor(-1, -1, -1, -1));
-	color.a = 0;
-	color.r = tempi[0];
-	color.g = tempi[1];
-	color.b = tempi[2];
-	return (color);
+	return (getcolor(0, tempi[0], tempi[1], tempi[2]));
 }
