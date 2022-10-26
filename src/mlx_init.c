@@ -6,7 +6,7 @@
 /*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:27:36 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/13 16:45:50 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/25 21:54:00 by skorte           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	game_mlx_init(t_game *game)
 		game->frame_buffer, X_RES / 2 - 640, Y_RES / 2 - 360);
 	mlx_do_key_autorepeaton(game->mlx);
 	mlx_expose_hook(game->mlx_win, win_redraw, game);
-	mlx_hook(game->mlx_win, 2, (1L << 0), key_hook, game);
-	mlx_hook(game->mlx_win, 17, (1L << 17), exitclick, game);
 	load_images(game);
 	buffer_init(game);
 	fill_buffer(game);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame_buffer, 0, 0);
+	mlx_hook(game->mlx_win, 2, (1L << 0), key_hook, game);
+	mlx_hook(game->mlx_win, 17, (1L << 17), exitclick, game);
 	mlx_loop(game->mlx);
 }
