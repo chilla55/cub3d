@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/25 17:51:41 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/27 13:48:44 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void	skip_lines(t_game *game, int fd, int lts);
 
 // map/parse.c
 void	parse_option(int fd, t_game *game, int *i, char **line);
+void	check_options(t_game *game);
 void	parse_map(int fd, t_game *game, int i);
 
 // map/encode_rgb.c

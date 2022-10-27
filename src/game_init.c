@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/26 10:48:47 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/27 13:49:05 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,14 @@ int	get_params(t_game *game, char *path)
 	parse_option(fd, game, &a, &line);
 	printf("%d", a);
 	i = 0;
+	get_size(game, fd, line);
+	close (fd);
+	check_options(game);
 	while (i < 4)
 	{
 		printf("%s\n", game->image_paths[i]);
 		i++;
 	}
-	get_size(game, fd, line);
-	close (fd);
-	if (game->c_color.a == -1 || game->f_color.a == -1)
-		game_exit(game, -5);
 	printf("%d,%d,%d,%d\n", game->f_color.a, game->f_color.r,
 		game->f_color.g, game->f_color.b);
 	printf("%d,%d,%d,%d\n", game->c_color.a, game->c_color.r,

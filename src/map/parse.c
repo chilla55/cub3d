@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:42:09 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/10/26 11:34:56 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/27 13:48:53 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@
 ** Check if all textures and colors are defined
 */
 
-void	check_options(t_game *game, char **line)
+void	check_options(t_game *game)
 {
 	if (!game->image_paths[0] || !game->image_paths[1]
 		|| !game->image_paths[2] || !game->image_paths[3])
-	{
-		free(*line);
-//		free(line);
 		game_exit(game, -1);
-	}
+	if (game->c_color.a == -1 || game->f_color.a == -1)
+		game_exit(game, -5);
 }
 
 /*
@@ -65,7 +63,7 @@ void	parse_option(int fd, t_game *game, int *i, char **line)
 	else if (!ft_strncmp(*line, "C ", 2))
 		game->c_color = encode_rgb(*line);
 	else if (*line[0] != '\n')
-		return (check_options(game, line));
+		return ;
 	free(*line);
 	(*i)++;
 	parse_option(fd, game, i, line);
