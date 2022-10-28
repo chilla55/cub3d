@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:42:09 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/10/27 13:48:53 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:09:42 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,35 @@ void	check_options(t_game *game)
 ** Parser for textures and colors
 */
 
+int	parse_texture(t_game *game, char **line)
+{
+	if (!ft_strncmp(*line, "NO ", 3))
+	{
+		if (game->image_paths[0] == NULL)
+			game->image_paths[0] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+		return (1);
+	}
+	if (!ft_strncmp(*line, "SO ", 3))
+	{
+		if (game->image_paths[1] == NULL)
+			game->image_paths[1] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+		return (1);
+	}
+	else if (!ft_strncmp(*line, "WE ", 3))
+	{
+		if (game->image_paths[2] == NULL)
+			game->image_paths[2] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+		return (1);
+	}
+	else if (!ft_strncmp(*line, "EA ", 3))
+	{
+		if (game->image_paths[3] == NULL)
+			game->image_paths[3] = ft_substr(*line, 3, ft_strlen(*line) - 4);
+		return (1);
+	}
+	return (0);
+}
+
 void	parse_option(int fd, t_game *game, int *i, char **line)
 {
 	*line = get_next_line(fd);
@@ -38,26 +67,8 @@ void	parse_option(int fd, t_game *game, int *i, char **line)
 		game_exit(game, -1);
 	}
 	printf("%s", *line);
-	if (!ft_strncmp(*line, "NO ", 3))
-	{
-		if (game->image_paths[0] == NULL)
-			game->image_paths[0] = ft_substr(*line, 3, ft_strlen(*line) - 4);
-	}
-	else if (!ft_strncmp(*line, "SO ", 3))
-	{
-		if (game->image_paths[1] == NULL)
-			game->image_paths[1] = ft_substr(*line, 3, ft_strlen(*line) - 4);
-	}
-	else if (!ft_strncmp(*line, "WE ", 3))
-	{
-		if (game->image_paths[2] == NULL)
-			game->image_paths[2] = ft_substr(*line, 3, ft_strlen(*line) - 4);
-	}
-	else if (!ft_strncmp(*line, "EA ", 3))
-	{
-		if (game->image_paths[3] == NULL)
-			game->image_paths[3] = ft_substr(*line, 3, ft_strlen(*line) - 4);
-	}
+	if (parse_texture(game, line))
+		;
 	else if (!ft_strncmp(*line, "F ", 2))
 		game->f_color = encode_rgb(*line);
 	else if (!ft_strncmp(*line, "C ", 2))
