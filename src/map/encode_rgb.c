@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   encode_rgb.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorte <skorte@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 12:33:03 by agrotzsc          #+#    #+#             */
-/*   Updated: 2022/10/26 10:51:07 by skorte           ###   ########.fr       */
+/*   Updated: 2022/10/29 22:47:23 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	checkvalid(int *i)
+int	checkvalid(int *i, t_game *game)
 {
 	if ((i[0] <= 255 && i[0] >= 0) && (i[1] <= 255 && i[1] >= 0)
 		&& (i[2] <= 255 && i[2] >= 0))
 		return (1);
+	game->error = -2;
 	return (0);
 }
 
@@ -35,7 +36,7 @@ t_color	getcolor(int a, int r, int g, int b)
 ** Parser for textures and colors
 */
 
-t_color	encode_rgb(char *str)
+t_color	encode_rgb(char *str, t_game *game)
 {
 	int		tempi[3];
 	char	**temp;
@@ -58,7 +59,7 @@ t_color	encode_rgb(char *str)
 	}
 	free(temps);
 	free_split(temp);
-	if (!checkvalid(tempi))
+	if (!checkvalid(tempi, game))
 		return (getcolor(-1, -1, -1, -1));
 	return (getcolor(0, tempi[0], tempi[1], tempi[2]));
 }

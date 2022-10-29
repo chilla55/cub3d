@@ -20,7 +20,7 @@ else
 endif
 
 
-NAME			=	cub3d
+NAME			=	cub3D
 CC				=	gcc
 DEF_COLOR		=	\033[0;39m
 GREEN			=	\033[0;92m
@@ -53,6 +53,7 @@ SRC_FILES	=	src/exit.c                	\
 				src/raycasting_init.c     	\
 				src/map/encode_rgb.c      	\
 				src/map/parse.c           	\
+				src/map/get_texture.c     	\
 				src/utils/free_split.c		\
 
 
@@ -106,3 +107,6 @@ fclean: clean
 	@echo "$(GREEN)FClean.$(DEF_COLOR)"
 
 re: fclean all
+
+#---- WSL2 set Xlaunch display command ---------------------------------------#
+#export DISPLAY="$(grep nameserver /etc/resolv.conf | sed 's/nameserver //'):0"

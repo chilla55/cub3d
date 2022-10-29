@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:36:39 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/27 13:49:05 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/29 22:38:29 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	null_init(t_game *game)
 	}
 	game->c_color = getcolor(-1, -1, -1, -1);
 	game->f_color = getcolor(-1, -1, -1, -1);
+	game->error = 0;
 }
 
 void	set_player_pos(t_game *game, int x, int y)

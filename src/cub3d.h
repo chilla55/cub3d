@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:59:42 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/27 13:48:44 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/29 22:42:31 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_game {
 	char	**map;
 	int		height;
 	int		width;
+	int		error;
 	double	scale;
 	double	x_pos;
 	double	y_pos;
@@ -163,6 +164,9 @@ void	get_size(t_game *game, int fd, char *line);
 void	skip_empty_line(t_game *game, int fd);
 void	skip_lines(t_game *game, int fd, int lts);
 
+// map/get_texture.c
+int		parse_texture(t_game *game, char **line);
+
 // map/parse.c
 void	parse_option(int fd, t_game *game, int *i, char **line);
 void	check_options(t_game *game);
@@ -170,7 +174,7 @@ void	parse_map(int fd, t_game *game, int i);
 
 // map/encode_rgb.c
 t_color	getcolor(int a, int r, int g, int b);
-t_color	encode_rgb(char *str);
+t_color	encode_rgb(char *str, t_game *game);
 
 // utils/free_split.c
 void	free_split(char **split);

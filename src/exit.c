@@ -6,7 +6,7 @@
 /*   By: agrotzsc <agrotzsc@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:39:05 by skorte            #+#    #+#             */
-/*   Updated: 2022/10/25 13:24:16 by agrotzsc         ###   ########.fr       */
+/*   Updated: 2022/10/29 22:50:41 by agrotzsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	exitmessage(int exitmode)
 		write (STDERR_FILENO, "\nError:\n Wall texture not found!\n", 33);
 	else if (exitmode == -5)
 		write (STDERR_FILENO, "\nError:\n RGB values not in range 0-255\n", 40);
+	else if (exitmode == -6)
+		write (STDERR_FILENO, "\nError:\n Doubles keys in cub file\n", 35);
 	else if (exitmode < 0)
 		write (STDERR_FILENO, "\nError:\n error??\n", 17);
 }
